@@ -24,4 +24,37 @@ getwd()
 source("FinalPaper_Code/FinalPaper_Variables.R")
 ```
 
-question of returns [@dimson2009triumph]. 
+# Data Sources
+
+  The analsis of this paper is built on unbalanced panel data that lists selected National Indices against macro-economic indicators for all countries of the world, and occurrences of natural disasters from as early as 1991 until as late as 2015.
+
+  We use National Indices from Yahoo Finance: DAX (DE), NIKKEI (JP), FTSE100 (UK), CAC40 (FR), IBOV (BR), and OMRU (RU). These indices measure the combined stock values of firms in a country which are top performing according to given benchmarka. For instance, the DAX measures the 30 most valuable firms in Germany, and the IBOV includes all Brazilian firms whose negotiabilty index added is worth 80% of all other negotiability indexes added and which have been traded the previous year. 
+  Secondly, the Word Bank provides us with data on stocks traded, total value (% of GDP), foreign direct investment (% of GDP), Stocks traded, turnover ratio (%), GDP per capita growth (annual %), estimated capital stock (real 2005 USD), and GDP per capita (constant 2005 USD). The World Bank gathers its data consistetly on a yearly basis.
+  Thirdly, the International Disaster Database (EM-DAT) of the Centre for Research of the Epidemiology of Disasters (CRED) provides public data on natural disasters with the aim to help development and relief agencies mitigate the impact of these disasters. We create a variable that counts the occurences of natural disasters per year in a country but do not differentiate between the types of disaster.
+
+# Draft Literature Review
+
+  We would like to provide a two-step Literature Review. In the first part we summarize general findings of the field regarding National Indices: What are determinants that ought to be influential on the level of National Indices?
+In the second, more narrow step, we focus on the relationsship between GDP developments and National Indices: Did previous studies find a relationship after all? Were causation assumptions confirmed?
+
+### National Indices
+
+  Dimson et al. provide a solid and helpful introduction ^[The work of Dimson et al. was regularly updated. The 2009 edition is the most recent version available] to world's stock markets and the question of returns [@dimson2009triumph]. 
+The field provides a tremendous amount of research on the question what influences Stock Markets in general and National Indices in specific. Work includes research on herding effects in advanced [@chiang2010empirical], Chinese [@tan2008herding] or Japanese Stock Markets [@chang2006idiosyncratic]. 
+
+Other scholars aim to predict the direction of indices via neural networks - as an attempt to go beyond traditional (non-)linear models. Examples of this stream of research are the work of Guresen et al. [@guresen2011using] or a study on the Istanbul Stock Exchange Index [@kara2011predicting]. Other authors investigate on the role of the media on stock markets [@tetlock2007giving] or even the weather [@symeonidis2010does, @kang2010weather, @yoon2009weather, @goetzmann2005rain, @cao2005stock].
+
+  Contagion and spill-over effects are also of interest for the field. Boyer et al. provide empirical evidence that stock market crises are spread globally through asset holdings of international investors. The more open (i.e. accessible) the stock markets, the higher the co-movements, they conclude [@boyer2006crises]. Kenourgios et al. investigate in a very similar direction [@kenourgios2011financial]. 
+
+Furthermore, the field moved on to insights from behavioral economics. Bollen et al. provide an interesting piece of work and find correlations between what they call the *twitter mood* and the Dow Jones Industrial Average over time [@bollen2011twitter]. The work of Zhang et al. [@zhang2011predicting] and Si et al. [@si2013exploiting] follow a very similar approach and use information from Twitter.
+
+### GDP Development and National Indices
+
+  The field provides various studies investigating on the relationship between GDP developments (or macroeconomic determinants of these developments) and Stock Markets in general. For example, Claessens et al. "study how local stock market development and internationalization–listing, trading, and capital raising in international exchanges–are related to economic fundamentals" [@claessens2006stock]. Duca states that there is a clear co-movement between stock market prices and GDP in developed economies. 
+  
+Investigating on the causal effects he finds that "the level of economic activity in a country can potentially depend on the stock market amongst other variables" [@duca2007relationship]. 
+On the other hand, Ritter finds that cross-country correlation of real stock returns and per capita GDP growth over 1900-2002 is negative. This is mainly traced back to the fact that increases in capital and labor inputs (i.e. two main determinants of GDP growth) in new corporations (i.e. representing innovation) do not necessarily imply higher dividends [@ritter2005economic].
+
+  Additionally, various studies examine the role of macroeconomic determinants on National Indices - which is also the interest of our Final Research Project. For 42 emerging markets Yartey examines on institutional and macroeconomic determinants on stock market developments [@yartey2008determinants]. Similar studies investigate on these determinants for a wide range of countries. These include OECD countries like Belgium [@van2006stock], France [@sraer2007performance], Germany [@antonios2010stock] or New Zealand from 1990 to 2003 [@diebold2008macroeconomic]. And developing markets such as Malaysia [@rahman2009macroeconomic] or BRICS-countries like India [@singh2010causal, @agrawalla2007causality] and South Africa [@hsing2011stock] in general. 
+
+# Reference
