@@ -15,8 +15,6 @@ source("FinalPaper_Code/FinalPaper_CleaningMerging.R")
 merge10$iso3c <- NULL
 merge10$iso3c.x <- NULL
 merge10$iso3c.y <- NULL
-merge10$V4 <- NULL
-merge10$V5 <- NULL
 
 # define year and Date as numeric
 merge10$year <- as.factor(merge10$year)
@@ -35,10 +33,15 @@ rm(sel)
 
 var <- c("USA.GDP", "JPN.GDP", "GBR.GDP", "FRA.GDP", "DEU.GDP", "USA.unempl", "JPN.unempl", "GBR.unempl",
          "FRA.unempl", "DEU.unempl", "USA.prvconsm", "JPN.prvconsm", "GBR.prvconsm", "FRA.prvconsm",
-         "DEU.prvconsm", "WTI.dollar.change", "Brent.dollar.change", "ECB.MRO.change", "ECB.dep.change")
+         "DEU.prvconsm", "WTI.dollar.change", "Brent.dollar.change", "ECB.MRO.change", "ECB.dep.change",
+         "USA.infl", "JPN.infl", "GBR.infl", "FRA.infl", "DEU.infl")
 
 for (i in var) {
   merge10[, paste0("L.", i)] <- DataCombine::shift(merge10[, i], shiftBy = -1)
+}
+
+for (i in var) {
+  merge10[, paste0("L2.", i)] <- DataCombine::shift(merge10[, i], shiftBy = -2)
 }
 
 rm(i, var)
@@ -46,13 +49,14 @@ rm(i, var)
 # creating new outcome variable: percentage change of stock indices
 var <- c("CAC.Close", "DAX.Close", "FTSE.Close", "NIK.Close")
 
-for (i in var)
-merge10 <- change(merge10, Var = i,
-                      type = 'percent',
-                      NewVar = paste0(i, ".change"),
-                      slideBy = -1)
+for (i in var){
+  merge10 <- change(merge10, Var = i,
+                    type = 'percent',
+                    NewVar = paste0(i, ".change"),
+                    slideBy = -1)
+}
 
 rm(i, var)
 
 # re-order columns
-merge10 <- merge10[ ,c(1,3,2,4:68)]
+merge10 <- merge10[ ,c(1,8,2:7,9:102)]
