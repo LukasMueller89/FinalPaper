@@ -12,6 +12,31 @@ try(setwd("/Users/Lukas/Documents/Git/FinalPaper/FinalPaper_Data"),silent=TRUE)
 try(setwd("C:/Users/Dani/Documents/GitHub2/FinalPaper/FinalPaper_Data"),silent=TRUE)
 getwd()
 
+
+# quarterly CPI percentage changes
+cpi <- read.csv("MEI_PRICES_02052016143434463.csv", header = FALSE, sep = ",", stringsAsFactors = FALSE, na.strings = c("", "NA"))
+cpi <- cpi[-1, ]
+
+var <- c("V4", "V7", "V8", "V10", "V11", "V12", "V13", "V14", "V15", "V16", "V18", "V19")
+
+for (i in var){
+  (cpi[, i] <- NULL)
+  }
+
+names(cpi) <- c('CPI1', 'CPI2', 'iso3c', 'type1', 'type2', 'time', 'inflation')
+
+cpi$Date <- (format(cpi$time, format = "%y/0%q"))
+cpi$Date <- gsub("[^a-zA-Z0-9]","",cpi$Date) #get rid of special characters
+cpi$time <- NULL
+
+cpi$inflation <- as.numeric(cpi$inflation)
+
+sub <- subset(cpi, type1 == "GP")
+inflt <- subset(sub, CPI1 == "CPALTT01")
+
+rm(cpi, sub, i, var)
+
+
 # quarterly oil price change: Brent
 brent <- read.csv("DCOILBRENTEU.csv", header = FALSE, sep = ",", stringsAsFactors = FALSE, na.strings = c("", "NA"))
 brent <- brent[-1, ]
@@ -60,6 +85,7 @@ aggMRO <- aggMRO[ ,c(1,34,2:33)]
 aggMRO <- aggMRO[order(aggMRO$Date), ]
 aggMRO <- aggMRO[ ,-(3:34)]
 rm(MRO)
+
 
 # deposit facility (ECB)
 deposit <- read.csv("DepositFacility.csv", header = FALSE, sep = ",", stringsAsFactors = FALSE, na.strings = c("", "NA"))
@@ -235,6 +261,26 @@ CAC <- ddply(CAC, .(Date), function(CAC) c(CAC.Open=mean(CAC$CAC.Open), CAC.High
 
 rm(URL)
 
+# merge the datasets
+# inflation
+USA <- subset(inflt, iso3c == "USA")
+DEU <- subset(inflt, iso3c == "DEU")
+GBR <- subset(inflt, iso3c == "GBR")
+JPN <- subset(inflt, iso3c == "JPN")
+FRA <- subset(inflt, iso3c == "FRA")
+names(USA)[6] <- 'USA.infl'
+names(DEU)[6] <- 'DEU.infl'
+names(GBR)[6] <- 'GBR.infl'
+names(JPN)[6] <- 'JPN.infl'
+names(FRA)[6] <- 'FRA.infl'
+
+dfs <- list(USA,DEU,GBR,JPN,FRA)
+
+merge000 <- join_all(dfs,by=c("Date"),  type = "full", match = "first")
+
+rm(USA, DEU, GBR, JPN, FRA, inflt, dfs)
+
+# quarterly GDP
 USA <- subset(GPSA, iso3c == "USA")
 DEU <- subset(GPSA, iso3c == "DEU")
 GBR <- subset(GPSA, iso3c == "GBR")
@@ -248,11 +294,21 @@ names(FRA)[6] <- 'FRA.GDP'
 
 dfs <- list(USA,DEU,GBR,JPN,FRA)
 
-merge0 <- join_all(dfs,by=c("Date"),  type = "full", match = "first")
+merge00 <- join_all(dfs,by=c("Date"),  type = "full", match = "first")
 
-rm(USA, DEU, GBR, JPN, FRA, GPSA, dfs)
+merge0 <- merge(merge000,merge00,by=c("Date"), all.x = TRUE)
 
-# merge the data sets
+rm(USA, DEU, GBR, JPN, FRA, GPSA, dfs, merge000, merge00)
+
+var <- c("CPI1", "CPI2", "iso3c.x", "type1", "type2", "iso3c.y", "country", "V4", "V5")
+
+for (i in var){
+  (merge0[, i] <- NULL)
+}
+
+rm(var, i)
+
+# stock indices
 merge1 <- merge(merge0,CAC,by=c("Date"), all.x = TRUE)
 merge2 <- merge(merge1,DAX,by=c("Date"), all.x = TRUE)
 merge3 <- merge(merge2,FTSE,by=c("Date"), all.x = TRUE)
@@ -260,6 +316,7 @@ merge4 <- merge(merge3,NIKKEI,by=c("Date"), all.x = TRUE)
 merge4$country <- NULL
 rm(CAC, DAX, FTSE, NIKKEI, merge0, merge1, merge2, merge3)
 
+#unemployment
 USA <- subset(unempl, iso3c == "USA")
 DEU <- subset(unempl, iso3c == "DEU")
 GBR <- subset(unempl, iso3c == "GBR")
@@ -281,6 +338,7 @@ merge5 <- merge(merge4,unempl2,by=c("Date"), all.x = TRUE)
 merge5$country <- NULL
 rm(merge4, unempl, unempl2)
 
+# private consumption
 USA <- subset(prvconsm, iso3c == "USA")
 DEU <- subset(prvconsm, iso3c == "DEU")
 GBR <- subset(prvconsm, iso3c == "GBR")
@@ -302,14 +360,18 @@ merge6 <- merge(merge5,prvconsm2,by=c("Date"), all.x = TRUE)
 merge6$country <- NULL
 rm(merge5, prvconsm, prvconsm2)
 
+# WTI oil price
 merge7 <- merge(merge6,wti,by=c("Date"), all.x = TRUE)
 rm(wti, merge6)
 
+# Brent crude oil price
 merge8 <- merge(merge7,brent,by=c("Date"), all.x = TRUE)
 rm(brent, merge7)
 
+# MRO change
 merge9 <- merge(merge8,aggMRO,by=c("Date"), all.x = TRUE)
 rm(aggMRO, merge8)
 
+# Deposit facility change
 merge10 <- merge(merge9,dep,by=c("Date"), all.x = TRUE)
 rm(dep, merge9)
