@@ -131,7 +131,7 @@ M4 <- lm(NIK.Close.change ~ L.JPN.GDP + L.JPN.infl + L.JPN.prvconsm + L.ECB.dep.
 ```{r, echo=FALSE, results="asis"}
 stargazer(M1, M2, M3, M4,
           type="latex",
-          title = "Basic Model",
+          title = "First Model",
           dep.var.labels=c("CAC","DAX", "FTSE", "Nikkei"),
           header = FALSE,
           no.space = TRUE)
@@ -187,5 +187,23 @@ DAAG::vif(M11)
 DAAG::vif(M12)
 ```
 
+```{r, echo=FALSE, message=FALSE, include=FALSE, cache=FALSE}
+summary(M13 <- lm(CAC.Close.change ~ L.FRA.GDP + L2.FRA.GDP + L.FRA.infl + L2.FRA.infl + L.FRA.prvconsm + L2.FRA.prvconsm + L.ECB.dep.change + L2.ECB.dep.change + L.WTI.dollar.change + L2.WTI.dollar.change + L.USA.GDP + L2.USA.GDP + year, data = merge10))
+
+summary(M14 <- lm(DAX.Close.change ~ L.DEU.GDP + L2.DEU.GDP + L.DEU.infl + L2.DEU.infl + L.DEU.prvconsm + L2.DEU.prvconsm + L.ECB.dep.change + L2.ECB.dep.change + L.WTI.dollar.change + L2.WTI.dollar.change + L.USA.GDP + L2.USA.GDP + year, data = merge10))
+
+summary(M15 <- lm(FTSE.Close.change ~ L.GBR.GDP + L2.GBR.GDP + L.GBR.infl + L2.GBR.infl + L.GBR.prvconsm + L2.GBR.prvconsm + L.ECB.dep.change + L2.ECB.dep.change + L.WTI.dollar.change + L2.WTI.dollar.change + L.USA.GDP + L2.USA.GDP + year, data = merge10))
+
+summary(M16 <- lm(NIK.Close.change ~ L.JPN.GDP + L2.JPN.GDP + L.JPN.infl + L2.JPN.infl + L.JPN.prvconsm + L2.JPN.prvconsm + L.ECB.dep.change + L2.ECB.dep.change + L.WTI.dollar.change + L2.WTI.dollar.change + L.USA.GDP + L2.USA.GDP + year, data = merge10))
+```
+
+```{r, echo=FALSE, results="asis"}
+stargazer(M13, M14, M15, M16,
+          type="latex",
+          title = "Final Model with Lags for one and two quarter for GDP and inflation",
+          dep.var.labels=c("CAC","DAX", "FTSE", "Nikkei"),
+          header = FALSE,
+          no.space = TRUE)
+```
 
 # Reference
