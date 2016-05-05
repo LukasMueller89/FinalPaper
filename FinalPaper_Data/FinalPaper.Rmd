@@ -3,7 +3,7 @@ title: "National GDP Growth and Changes of Stock Market Indices"
 subtitle: "Evidence from France, Germany, Great Britain and Japan"
 author:
 - Daniel Limberg
-- Lukas Müller
+- Lukas Mueller
 date: "`r format(Sys.time(), '%d %B %Y')`"
 abstract:  | 
   Using data from Germany, Japan, Great Britain and France we provide an analysis of the effect of national GDP Growth on changes of national stock market indices. 
@@ -13,6 +13,8 @@ bibliography:
     - Literature.bib
 toc: yes
 ---
+
+\DeclareUnicodeCharacter{00A0}{ }
 
 ```{r, echo=FALSE, message=FALSE, include=FALSE, cache=FALSE}
 # Descriptive & Inferential Statistics
@@ -36,7 +38,7 @@ source("FinalPaper_Code/FinalPaper_Variables.R")
 # Introduction
 
 
-\pagebreak
+
 
 
 # Literature Review
