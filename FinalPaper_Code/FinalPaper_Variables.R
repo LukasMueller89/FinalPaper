@@ -58,5 +58,8 @@ for (i in var){
 
 rm(i, var)
 
+# baseline reference for year factors
+merge10 <- within(merge10, year <- relevel(year, ref = 16))
+
 # re-order columns
 merge10 <- merge10[ ,c(1,8,2:7,9:102)]
