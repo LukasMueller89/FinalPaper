@@ -96,22 +96,67 @@ We investigate on four different dependent variables: The National stock indices
   Secondly, the Word Bank provides us with data on stocks traded, total value (% of GDP), foreign direct investment (% of GDP), Stocks traded, turnover ratio (%), GDP per capita growth (annual %), estimated capital stock (real 2005 USD), and GDP per capita (constant 2005 USD). The World Bank gathers its data consistetly on a yearly basis.
   Thirdly, the International Disaster Database (EM-DAT) of the Centre for Research of the Epidemiology of Disasters (CRED) provides public data on natural disasters with the aim to help development and relief agencies mitigate the impact of these disasters. We create a variable that counts the occurences of natural disasters per year in a country but do not differentiate between the types of disaster.
 
+
+# Basic Model
+
+```{r, echo=FALSE, message=FALSE, include=FALSE, cache=FALSE}
+M1 <- lm(CAC.Close.change ~ L.FRA.GDP + L.FRA.infl + L.FRA.prvconsm + L.ECB.dep.change + L.WTI.dollar.change + L.USA.GDP, data = merge10)
+
+M2 <- lm(DAX.Close.change ~ L.DEU.GDP + L.DEU.infl + L.DEU.prvconsm + L.ECB.dep.change + L.WTI.dollar.change + L.USA.GDP, data = merge10)
+
+M3 <- lm(FTSE.Close.change ~ L.GBR.GDP + L.GBR.infl + L.GBR.prvconsm + L.ECB.dep.change + L.WTI.dollar.change + L.USA.GDP, data = merge10)
+
+M4 <- lm(NIK.Close.change ~ L.JPN.GDP + L.JPN.infl + L.JPN.prvconsm + L.ECB.dep.change + L.WTI.dollar.change + L.USA.GDP, data = merge10)
+```
+
+```{r, echo=FALSE, results="asis"}
+stargazer(M1, M2, M3, M4,
+          type="latex",
+          title = "Basic Model",
+          dep.var.labels=c("CAC","DAX", "FTSE", "Nikkei"),
+          header = FALSE,
+          no.space = TRUE)
+```
+
+
+# Model includes year dummies
+
+```{r, echo=FALSE, message=FALSE, include=FALSE, cache=FALSE}
+M5 <- lm(CAC.Close.change ~ L.FRA.GDP + L.FRA.infl + L.FRA.prvconsm + L.ECB.dep.change  + L.WTI.dollar.change + L.USA.GDP + year, data = merge10)
+
+M6 <- lm(DAX.Close.change ~ L.DEU.GDP + L.DEU.infl + L.DEU.prvconsm + L.ECB.dep.change  + L.WTI.dollar.change + L.USA.GDP + year, data = merge10)
+
+M7 <- lm(FTSE.Close.change ~ L.GBR.GDP + L.GBR.infl + L.GBR.prvconsm + L.ECB.dep.change + L.WTI.dollar.change + L.USA.GDP + year, data = merge10)
+
+M8 <- lm(NIK.Close.change ~ L.JPN.GDP + L.JPN.infl + L.JPN.prvconsm + L.ECB.dep.change  + L.WTI.dollar.change + L.USA.GDP + year, data = merge10)
+```
+
+```{r, echo=FALSE, results="asis"}
+stargazer(M5, M6, M7, M8,
+          type="latex",
+          title = "Model with Year Dummies",
+          dep.var.labels=c("CAC","DAX", "FTSE", "Nikkei"),
+          header = FALSE,
+          no.space = TRUE)
+```
+
+
 # Final Model
 
 ```{r, echo=FALSE, message=FALSE, include=FALSE, cache=FALSE}
-M9 <- lm(CAC.Close.change ~ L.FRA.GDP + L2.FRA.GDP + L.FRA.infl + L.FRA.prvconsm + L.ECB.dep.change  + L.WTI.dollar.change + L.USA.GDP + L2.USA.GDP + year, data = merge10)
+M9 <- lm(CAC.Close.change ~ L.FRA.GDP + L2.FRA.GDP + L.FRA.infl + L.FRA.prvconsm + L.ECB.dep.change + L.WTI.dollar.change + L.USA.GDP + L2.USA.GDP + year, data = merge10)
 
-M10 <- lm(DAX.Close.change ~ L.DEU.GDP + L2.DEU.GDP + L.DEU.infl + L.DEU.prvconsm + L.ECB.dep.change  + L.WTI.dollar.change + L.USA.GDP + L2.USA.GDP + year, data = merge10)
+M10 <- lm(DAX.Close.change ~ L.DEU.GDP + L2.DEU.GDP + L.DEU.infl + L.DEU.prvconsm + L.ECB.dep.change + L.WTI.dollar.change + L.USA.GDP + L2.USA.GDP + year, data = merge10)
 
-M11 <- lm(FTSE.Close.change ~ L.GBR.GDP + L2.GBR.GDP + L.GBR.infl + L.GBR.prvconsm + L.ECB.dep.change  + L.WTI.dollar.change + L.USA.GDP + L2.USA.GDP + year, data = merge10)
+M11 <- lm(FTSE.Close.change ~ L.GBR.GDP + L2.GBR.GDP + L.GBR.infl + L.GBR.prvconsm + L.ECB.dep.change + L.WTI.dollar.change + L.USA.GDP + L2.USA.GDP + year, data = merge10)
 
-M12 <- lm(NIK.Close.change ~ L.JPN.GDP + L2.JPN.GDP + L.JPN.infl + L.JPN.prvconsm + L.ECB.dep.change  + L.WTI.dollar.change + L.USA.GDP + L2.USA.GDP + year, data = merge10)
+M12 <- lm(NIK.Close.change ~ L.JPN.GDP + L2.JPN.GDP + L.JPN.infl + L.JPN.prvconsm + L.ECB.dep.change + L.WTI.dollar.change + L.USA.GDP + L2.USA.GDP + year, data = merge10)
 ```
 
 ```{r, echo=FALSE, results="asis"}
 stargazer(M9, M10, M11, M12,
           type="latex",
-          title = "Expanded Model with Years and US GDP Growth",
+          title = "Final Model with Lags for one and two quarter for GDP",
           dep.var.labels=c("CAC","DAX", "FTSE", "Nikkei"),
           header = FALSE,
           no.space = TRUE)
@@ -123,5 +168,6 @@ DAAG::vif(M10)
 DAAG::vif(M11)
 DAAG::vif(M12)
 ```
+
 
 # Reference
