@@ -21,6 +21,7 @@ library(ggplot2)
 library(magrittr)
 library(grid)
 library(DAAG)
+library(lmtest)
 
 # Set Working Directory
 try(setwd("/Users/Lukas/Documents/Git/FinalPaper/"),silent=TRUE)
@@ -187,6 +188,8 @@ DAAG::vif(M11)
 DAAG::vif(M12)
 ```
 
+# all variables lagged by two periods
+
 ```{r, echo=FALSE, message=FALSE, include=FALSE, cache=FALSE}
 summary(M13 <- lm(CAC.Close.change ~ L.FRA.GDP + L2.FRA.GDP + L.FRA.infl + L2.FRA.infl + L.FRA.prvconsm + L2.FRA.prvconsm + L.ECB.dep.change + L2.ECB.dep.change + L.WTI.dollar.change + L2.WTI.dollar.change + L.USA.GDP + L2.USA.GDP + year, data = merge10))
 
@@ -205,5 +208,27 @@ stargazer(M13, M14, M15, M16,
           header = FALSE,
           no.space = TRUE)
 ```
+
+```{r, echo=FALSE}
+DAAG::vif(M13)
+DAAG::vif(M14)
+DAAG::vif(M15)
+DAAG::vif(M16)
+```
+
+```{r, echo=FALSE}
+lmtest::bptest(M13, studentize = FALSE)
+lmtest::bptest(M14, studentize = FALSE)
+lmtest::bptest(M15, studentize = FALSE)
+lmtest::bptest(M16, studentize = FALSE)
+```
+
+```{r, echo=FALSE}
+lmtest::bgtest(M13, order = 2, order.by = NULL, type = c("Chisq", "F"), data = list(), fill = 0)
+lmtest::bgtest(M14, order = 2, order.by = NULL, type = c("Chisq", "F"), data = list(), fill = 0)
+lmtest::bgtest(M15, order = 2, order.by = NULL, type = c("Chisq", "F"), data = list(), fill = 0)
+lmtest::bgtest(M16, order = 2, order.by = NULL, type = c("Chisq", "F"), data = list(), fill = 0)
+```
+
 
 # Reference
