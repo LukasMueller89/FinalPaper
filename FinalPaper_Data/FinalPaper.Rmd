@@ -14,8 +14,6 @@ bibliography:
 toc: yes
 ---
 
-\DeclareUnicodeCharacter{00A0}{ }
-
 ```{r, echo=FALSE, message=FALSE, include=FALSE, cache=FALSE}
 # Descriptive & Inferential Statistics
 library(stargazer)
@@ -35,11 +33,19 @@ getwd()
 source("FinalPaper_Code/FinalPaper_Variables.R")
 ```
 
+\pagebreak
+
 # Introduction
 
+  In this assignment, we investigate on an odd relation: GDP growth and national equity prices; that is national stock indices. The intuitive assumption that one has automatically is fairly straight forward: The better the economy performs, the higher expectations of market participants, investments and trust in the future. In turn, we should - naturally - obtain an increase the level of national stock market indices. 
+
+  However, the more interesting question is beyond this intuitive assumption:
+Focusing on four OECD countries (Germany, France, Great Britain and Japan) we investigate on the question whether there are different levels of statistical significance for the effect of GDP growth on equity prices. Note that we do not compare the size of the effects (i.e. coefficients) since we investigate on different dependent variables. Rather, we compare the statistical significance across the four countries of interest. For equity prices, we take the four major national stock market indices of the countries as our dependent variable: The CAC40 (France), DAX (Germany), FTSE100 (Great Britain) and the NIKKEI (Japan). We control for a row of other, lagged explanatory determinants - not only from within the national economy (e.g. unemployment rate) but also external, more global factors (e.g. oil prices). We elaborate on the specific covariates below. For our analysis we focus on the time period between the second quarter of 1999 (where ECB interest rates became relevant) and fourth quarter of 2015. 
 
 
+  The rest of this paper is structured as follows:
 
+\pagebreak
 
 # Literature Review
 
@@ -59,16 +65,32 @@ Furthermore, the field moved on to insights from behavioral economics. Bollen et
 
 ## GDP Development and National Indices
 
-  The field provides various studies investigating on the relationship between GDP developments (or macroeconomic determinants of these developments) and Stock Markets in general. For example, Claessens et al. "study how local stock market development and internationalization–listing, trading, and capital raising in international exchanges–are related to economic fundamentals" [@claessens2006stock]. Duca states that there is a clear co-movement between stock market prices and GDP in developed economies. 
-  
-Investigating on the causal effects he finds that "the level of economic activity in a country can potentially depend on the stock market amongst other variables" [@duca2007relationship]. 
-On the other hand, Ritter finds that cross-country correlation of real stock returns and per capita GDP growth over 1900-2002 is negative. This is mainly traced back to the fact that increases in capital and labor inputs (i.e. two main determinants of GDP growth) in new corporations (i.e. representing innovation) do not necessarily imply higher dividends [@ritter2005economic].
+  The field provides various studies focusing on the relationship between GDP growth (or macroeconomic determinants of GDP growth) and stock markets in general. For example, Claessens et al. "study how local stock market development and internationalization–listing, trading, and capital raising in international exchanges–are related to economic fundamentals" [@claessens2006stock]. Duca states that there is a clear co-movement between stock market prices and GDP in developed economies. Assuming causal effects he finds that "the level of economic activity in a country can potentially depend on the stock market amongst other variables" [@duca2007relationship]. On the other hand, Ritter finds that cross-country correlation of real stock returns and per capita GDP growth over 1900-2002 is negative. This is mainly traced back to the fact that increases in capital and labor inputs (i.e. two main determinants of GDP growth) in new corporations (i.e. representing innovation) do not necessarily imply higher dividends [@ritter2005economic].
 
-  Additionally, various studies examine the role of macroeconomic determinants on National Indices - which is also the interest of our Final Research Project. For 42 emerging markets Yartey examines on institutional and macroeconomic determinants on stock market developments [@yartey2008determinants]. Similar studies investigate on these determinants for a wide range of countries. These include OECD countries like Belgium [@van2006stock], France [@sraer2007performance], Germany [@antonios2010stock] or New Zealand from 1990 to 2003 [@diebold2008macroeconomic]. And developing markets such as Malaysia [@rahman2009macroeconomic] or BRICS-countries like India [@singh2010causal, @agrawalla2007causality] and South Africa [@hsing2011stock] in general. 
+  For 42 emerging markets Yartey examines the effect of institutional and macroeconomic determinants on stock market developments [@yartey2008determinants]. Similar studies focus on these determinants for a wide range of countries. These include OECD countries like Belgium [@van2006stock], France [@sraer2007performance], Germany [@antonios2010stock] or New Zealand from 1990 to 2003 [@diebold2008macroeconomic]. And developing markets such as Malaysia [@rahman2009macroeconomic] or BRICS-countries like India [@singh2010causal, @agrawalla2007causality] and South Africa [@hsing2011stock] in general. 
 
-# Data Sources
+# Research Question and Hypothesis
 
-  The analsis of this paper is built on unbalanced panel data that lists selected National Indices against macro-economic indicators for all countries of the world, and occurrences of natural disasters from as early as 1991 until as late as 2015.
+*Does national GDP growth lead to growing national stock market indices?*
+
+* H~0~: There are statistically significant effects of national GDP growth on the growth rates of national stock market indices.
+
+* H~1~: There are no statistically significant effects of national GDP growth on the growth rates of national stock market indices.
+
+
+# Data and Variables of Interest 
+
+We investigate on four different dependent variables: The National stock indices of Germany, France, Great Britain and Japan. We obtain data from their average closing values.
+
+**Dependent Variables**   | Official Title                      | Scope
+ -------------------- | ----------------------------------- | -----------------------
+ DAX (Germany)        | Deutscher Aktienindex               | 30 major Companies
+ CAC (France)         | Cotation Assisté en Continu 40      | 40 highest Market Caps
+ FTSE (Great Britain) | Fin. Times Stock Exchange 100 Index | 100 Companies
+ NIKKEI (Japan)       | NIKKEI 225                          | 225 Equities
+
+
+  The analsis of this paper is built on unbalanced panel data that lists selected national indices against macro-economic indicators for all countries of the world, and occurrences of natural disasters from as early as 1991 until as late as 2015.
 
   We use National Indices from Yahoo Finance: DAX (DE), NIKKEI (JP), FTSE100 (UK), CAC40 (FR), IBOV (BR), and OMRU (RU). These indices measure the combined stock values of firms in a country which are top performing according to given benchmarka. For instance, the DAX measures the 30 most valuable firms in Germany, and the IBOV includes all Brazilian firms whose negotiabilty index added is worth 80% of all other negotiability indexes added and which have been traded the previous year. 
   Secondly, the Word Bank provides us with data on stocks traded, total value (% of GDP), foreign direct investment (% of GDP), Stocks traded, turnover ratio (%), GDP per capita growth (annual %), estimated capital stock (real 2005 USD), and GDP per capita (constant 2005 USD). The World Bank gathers its data consistetly on a yearly basis.
