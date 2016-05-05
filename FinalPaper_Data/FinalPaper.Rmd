@@ -190,12 +190,6 @@ stargazer(M9, M10, M11, M12,
           no.space = TRUE)
 ```
 
-```{r, echo=FALSE}
-DAAG::vif(M9)
-DAAG::vif(M10)
-DAAG::vif(M11)
-DAAG::vif(M12)
-```
 
 # all variables lagged by two periods
 
@@ -218,21 +212,21 @@ stargazer(M13, M14, M15, M16,
           no.space = TRUE)
 ```
 
-```{r, echo=FALSE}
+```{r, echo=FALSE, message = TRUE}
 DAAG::vif(M13)
 DAAG::vif(M14)
 DAAG::vif(M15)
 DAAG::vif(M16)
 ```
 
-```{r, echo=FALSE}
+```{r, echo=FALSE, message = TRUE}
 lmtest::bptest(M13, studentize = FALSE)
 lmtest::bptest(M14, studentize = FALSE)
 lmtest::bptest(M15, studentize = FALSE)
 lmtest::bptest(M16, studentize = FALSE)
 ```
 
-```{r, echo=FALSE}
+```{r, echo=FALSE, message = TRUE}
 lmtest::bgtest(M13, order = 2, order.by = NULL, type = c("Chisq", "F"), data = list(), fill = 0)
 lmtest::bgtest(M14, order = 2, order.by = NULL, type = c("Chisq", "F"), data = list(), fill = 0)
 lmtest::bgtest(M15, order = 2, order.by = NULL, type = c("Chisq", "F"), data = list(), fill = 0)
