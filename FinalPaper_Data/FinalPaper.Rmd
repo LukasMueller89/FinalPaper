@@ -79,16 +79,39 @@ Furthermore, the field moved on to insights from behavioral economics. Bollen et
 
 # Data and Variables of Interest 
 
-&nbsp;&nbsp;We analyse four different dependent variables: The National stock indices of Germany, France, Great Britain and Japan. We obtain data from their average closing values.
+&nbsp;&nbsp;In the following we introduce our variables of interest and briefly summarize how they fit our purpose. All variables were collected (or aggregated from our side) on a quarterly basis.  
+
+| **Variables**       | Number | Origin of Data | Time Range               |
+|---------------------|--------|----------------|--------------------------|
+| Dependent Variables | 4      | Yahoo Finance  | Quarter 2 1999 - Q4 2015 |
+| Covariates          | 6      | ECB, OECD      | Q2 1999 - Q4 2015        |
+
+
+## Dependent Variables
+
+&nbsp;&nbsp;We use data from Yahoo Finance to derive four dependent variables. We are interested in equity prices in the form of national stock market indices. These indices measure the combined stock values of companies or equities in a country which are top performing according to given benchmarks. We measure the dependent variables as the change to the the average closing value of a given index. In other words, we are not interested in the *level* but rather in the *variation* of the indices. 
 
 **Dependent Variables**   | Official Title                      | Scope
- -------------------- | ----------------------------------- | -----------------------|
- DAX (Germany)        | Deutscher Aktienindex               | 30 major Companies     |
- CAC (France)         | Cotation Assisté en Continu 40      | 40 highest Market Caps |
- FTSE (Great Britain) | Fin. Times Stock Exchange 100 Index | 100 Companies          |
- NIKKEI (Japan)       | NIKKEI 225                          | 225 Equities           |
+ ------------------------- | -------------------------------- | -------------
+ DAX (Germany) | Deutscher Aktienindex | 30 major Companies
+ CAC40 (France) | Cotation Assisté en Continu 40 | 40 highest Market Caps
+ FTSE100 (Gr. Britain) | Fin. Times Stock Exchange 100 Index | 100 Companies
+ NIKKEI (Japan) | NIKKEI 225 | 225 Equities
 
-&nbsp;&nbsp;We control for various covariates in our model. We lag all our covariates by one quarter. 
+## Covariates
+
+&nbsp;&nbsp;In the following we control for various control variables. We use a lag of one quarter and another lag of two quarters for all covariates. 
+
+&nbsp;&nbsp;Starting with country-specific covariates (i.e. variables that are unique to France, Germany, Great Britain and France), we use OECD data to derive the three following covariates. Among them is our key independent variables: GDP growth.  
+
+| **Country-specific Covariates** | Measured                  |   |
+|---------------------------------|---------------------------|---|
+| GDP growth                      | % change to previous rate |   |
+| Private consumption             | in % of GDP               |   |
+| Consumer price index (CPI)      | in % to previous rate     |   |
+
+&nbsp;&nbsp;From the ECB database we use the deposit facility (i.e. interest rate for banks^[We rakishly use the term "banks" for this paper. While "Financial Institutions" would be more appropriate to apply, we dare to continue with "banks" for reasons of simplicity.] making overnight deposits with the Eurosystem). Quite noticeable is the fact that, since June 2014, the rate here is negative. That is, quite counter-intuitive from a banks are penalized when making deposits.
+&nbsp;&nbsp;Again using OECD data, we take the quarterly GDP growth rate of the USA as a proxy for the general development of the world economy. The economy of the USA has a profound impact on other national business cycles, and national recessions in the US have sever repercussions across the globe. This was demonstrated again after 2007 when the US subprime mortgage crisis turned into a global recession. Moreover, the West Texas Intermediate (WTI) price changes are taken as an indicator of global economic health and a crucial determinant of economic growth.
 
 | **Covariates**       | Measured                            |
 |----------------------|-------------------------------------|
@@ -96,24 +119,10 @@ Furthermore, the field moved on to insights from behavioral economics. Bollen et
 | GDP growth USA       | % change to previous rate           |
 | WTI                  | % change to previous rate in U.S. $ |
 
-&nbsp;&nbsp;We take the quarterly GDP growth rate of the USA as a proxy for the world economy. The economy of the USA has a profound impact on other national business cycles, and national recessions in the US have sever repercussions across the globe. This was demonstrated again after 2007 when the US subprime mortgage crisis turned into a global recession. Moreover, the West Texas Intermediate and Brent Crude oil price changes are taken as an indicator of global economic health.
 
-&nbsp;&nbsp;We also control for country-specific covariates.
-
-| **Country-specific Covariates** | Measured                  |   |
-|---------------------------------|---------------------------|---|
-| GDP Growth                      | % change to previous rate |   |
-| Private Consumption             | in % of GDP               |   |
-| Consumer Price Index (CPI)      | in % to previous rate     |   |
-
-&nbsp;&nbsp;We use National Indices from Yahoo Finance: DAX (DE), NIKKEI (JP), FTSE100 (UK), CAC40 (FR), IBOV (BR), and OMRU (RU). These indices measure the combined stock values of firms in a country which are top performing according to given benchmarka. For instance, the DAX measures the 30 most valuable firms in Germany, and the IBOV includes all Brazilian firms whose negotiabilty index added is worth 80% of all other negotiability indexes added and which have been traded the previous year. 
-  Secondly, the Word Bank provides us with data on stocks traded, total value (% of GDP), foreign direct investment (% of GDP), Stocks traded, turnover ratio (%), GDP per capita growth (annual %), estimated capital stock (real 2005 USD), and GDP per capita (constant 2005 USD). The World Bank gathers its data consistetly on a yearly basis.
-  Thirdly, the International Disaster Database (EM-DAT) of the Centre for Research of the Epidemiology of Disasters (CRED) provides public data on natural disasters with the aim to help development and relief agencies mitigate the impact of these disasters. We create a variable that counts the occurences of natural disasters per year in a country but do not differentiate between the types of disaster.
+Excluded MRO, unemployment, Brent 
 
 # Descriptive Statistics
-
-Note that for the descriptive statistics section all graphs apply the full range of our available data (i.e. Q1 1991 until Q4 2015). However, our actual analysis (under the inferential statistics section) only takes into account the time period between Q2 1999 and Q4 2015 since we also control for the ECB interest rate.
-
 
 # Analysis
 
