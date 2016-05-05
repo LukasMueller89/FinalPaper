@@ -7,7 +7,11 @@ author:
 date: "`r format(Sys.time(), '%d %B %Y')`"
 abstract:  | 
   Using data from Germany, Japan, Great Britain and France we provide an analysis of the effect of national GDP Growth on changes of national stock market indices. Controling for various covariates we find that for Great Britain and France GDP growth has statistically significant effects on the FTSE100 and the CAC40. 
-output: pdf_document
+output: 
+    pdf_document:
+        fig_width: 7
+        fig_height: 6
+        fig_caption: true
 bibliography:
     - Literature.bib
 toc: yes
@@ -21,7 +25,6 @@ library(ggplot2)
 library(magrittr)
 library(grid)
 library(DAAG)
-library(lmtest)
 
 # Set Working Directory
 try(setwd("/Users/Lukas/Documents/Git/FinalPaper/"),silent=TRUE)
@@ -119,10 +122,158 @@ Furthermore, the field moved on to insights from behavioral economics. Bollen et
 | GDP growth USA       | % change to previous rate           |
 | WTI                  | % change to previous rate in U.S. $ |
 
-
-Excluded MRO, unemployment, Brent 
+&nbsp;&nbsp;At the early stage of research for this paper other covariates were taken into account: the ECB's interest rate on the main refinancing operations (MRO), the unemployment rate for the four countries of interest and the brent crude oil price. A first variance inflation factor (vif) test after prelimenary regressions suggested to ignore the mentioned variables.
 
 # Descriptive Statistics
+
+&nbsp;&nbsp;**Figure 1** presents a first glance at the four dependent variables from the first quarter in 1991 to the last quarter in 2015. Striking is the non-linearity of the graphs and the fact that the NIKKEI - quite contrary to the other indices - rather declined/stagnated. The DAX, CAC 40 and the FTSE shows fairly similar developments.  
+
+```{r, echo=FALSE, message=FALSE, include=FALSE, cache=FALSE}
+### Germany
+p1 <- ggplot(data = merge10, aes(x = Date, y = DAX.Close.change)) + geom_line() + scale_x_continuous(breaks=seq(1991.1, 2015.4, 10)) + ggtitle("Germany | DAX") + theme(plot.title = element_text(size=10)) + labs(x = "Quarters", y = "% change of Closing Value") + theme(legend.position="none") + theme(axis.text=element_text(size=8),
+        axis.title=element_text(size=8))
+### Japan
+p2 <- ggplot(data = merge10, aes(x = Date, y = NIK.Close.change)) + geom_line() + scale_x_continuous(breaks=seq(1991.1, 2015.4, 10)) + ggtitle("Japan | NIKKEI") + theme(plot.title = element_text(size=10)) + labs(x = "Quarters", y = "% change of Closing Value") + theme(legend.position="none") + theme(axis.text=element_text(size=8),
+        axis.title=element_text(size=8))
+### France
+p3 <- ggplot(data = merge10, aes(x = Date, y = CAC.Close.change)) + geom_line() + scale_x_continuous(breaks=seq(1991.1, 2015.4, 10)) + ggtitle("France | CAC40") + theme(plot.title = element_text(size=10)) + labs(x = "Quarters", y = "% change of Closing Value") + theme(legend.position="none") + theme(axis.text=element_text(size=8),
+        axis.title=element_text(size=8))
+### Great Britain
+p4 <- ggplot(data = merge10, aes(x = Date, y = FTSE.Close.change)) + geom_line() + scale_x_continuous(breaks=seq(1991.1, 2015.4, 10)) + ggtitle("Great Britain | FTSE100") + theme(plot.title = element_text(size=10)) + labs(x = "Quarters", y = "% change of Closing Value") + theme(legend.position="none") + theme(axis.text=element_text(size=8),
+        axis.title=element_text(size=8))
+```
+
+```{r, echo=FALSE, warning=FALSE, fig.cap="Dependent Variables (Change of National Stock Indices) over time"}
+multiplot(p3, p1, p4, p2, cols = 2)
+```
+
+&nbsp;&nbsp;Another overview we should be interested in is given in **Figure 2**: The development of our key independent variables over the same time (i.e. Q1 1991 until Q4 2015). Note that here we also include the graph for the USA which is an external factor we assume to be influential on all four economies of interest (and in turn on the according national stock indices). Compared to the previous developments of the dependent variables, the key independent variables show a relatively more similar, congruent evolution. Remarkable is the major, well visible downturn in the aftermath of financial crisis in all five graphs.  
+
+## Figure 2: *Key Independent Variables (Quarterly GDP growth to previous Quarter)* 
+
+```{r, echo=FALSE, message=FALSE, include=FALSE, cache=FALSE}
+farben <- c("firebrick1", "mediumspringgreen", "deepskyblue2", "chocolate4", "cyan2")
+### Germany
+p5 <- ggplot(data = merge10, aes(x = Date, y = DEU.GDP)) + geom_line() + scale_x_continuous(breaks=seq(1991.1, 2015.4, 10)) + ggtitle("Germany") + theme(plot.title = element_text(size=10)) + labs(x = "Quarters", y = "% Change") + theme(axis.text=element_text(size=8),
+        axis.title=element_text(size=8)) + theme(legend.position="none")
+### Japan
+p6 <- ggplot(data = merge10, aes(x = Date, y = JPN.GDP)) + geom_line() + scale_x_continuous(breaks=seq(1991.1, 2015.4, 10)) + ggtitle("Japan") + theme(plot.title = element_text(size=10)) + labs(x = "Quarters", y = "% Change") + theme(axis.text=element_text(size=8),
+        axis.title=element_text(size=8)) + theme(legend.position="none")
+### France
+p7 <- ggplot(data = merge10, aes(x = Date, y = FRA.GDP)) + geom_line() + scale_x_continuous(breaks=seq(1991.1, 2015.4, 10)) + ggtitle("France") + theme(plot.title = element_text(size=10)) + labs(x = "Quarters", y = "% Change") + theme(axis.text=element_text(size=8),
+        axis.title=element_text(size=8)) + theme(legend.position="none")
+### Great Britain
+p8 <- ggplot(data = merge10, aes(x = Date, y = GBR.GDP)) + geom_line() + scale_x_continuous(breaks=seq(1991.1, 2015.4, 10)) + ggtitle("Great Britain") + theme(plot.title = element_text(size=10)) + labs(x = "Quarters", y = "% Change") + theme(axis.text=element_text(size=8),
+        axis.title=element_text(size=8)) + theme(legend.position="none")
+### USA
+p9 <- ggplot(data = merge10, aes(x = Date, y = USA.GDP)) + geom_line() + scale_x_continuous(breaks=seq(1991.1, 2015.4, 10)) + ggtitle("USA") + theme(plot.title = element_text(size=10)) + labs(x = "Quarters", y = "% Change") + theme(axis.text=element_text(size=8),
+        axis.title=element_text(size=8)) + theme(legend.position="none")
+```
+
+```{r, echo=FALSE, warning=FALSE, fig.cap="Key Independent Variables (Quarterly GDP growth to previous Quarter)"}
+multiplot(p7, p5, p8, p6, p9, cols = 2)
+```
+
+&nbsp;&nbsp;**Figure 3** summarizes the main characteristics for the depent and key indepent variables.
+
+```{r, echo=FALSE, results="asis", fig.cap="Measures of Central Tendency for DVs & Key IVs"}
+# N, Mean St. Deviations, Min and Max for all Variables
+stargazer(merge10[c("CAC.Close.change", "DAX.Close.change", "FTSE.Close.change", "NIK.Close.change", "L.FRA.GDP", "L.DEU.GDP", "L.GBR.GDP"), "L.JPN.GDP"], 
+          type = "latex",
+          title = "Descriptive statistics",
+          header = FALSE,
+          digits=1)
+```
+
+&nbsp;&nbsp;The according Medians for the each dependent variable are as follows: 
+
+```{r, echo=FALSE, results="asis", fig.cap="Medians of Dependent Variables"}
+for (i in 65:68) {
+  merge10[, i] %>% 
+    median() %>%
+    paste(names(merge10)[i], ., "\n") %>%
+    cat()
+}
+```
+
+&nbsp;&nbsp;In the next step, **Figure 4** summarizes the frequency distributions of the dependent variables. For now, we assume the variables to be normally distributed. In following research to this assignment we will consider log-transformation for the variables.
+
+```{r, echo=FALSE, fig.cap="Distribution of Dependent Variables: Average Closing Values"}
+par(mfrow=c(2,2))
+hist(merge10$CAC.Close.change,
+     main="France | CAC40", 
+     col="black", 
+     breaks = 15,
+     xlab = "Average Closing Values",
+     ylab = "Frequency")
+hist(merge10$DAX.Close.change,
+     main="Germany | DAX", 
+     col="black", 
+     breaks = 15,
+     xlab = "Average Closing Values",
+     ylab = "Frequency")
+hist(merge10$FTSE.Close.change,
+     main="Great Britain | FTSE100", 
+     col="black", 
+     breaks = 15,
+     xlab = "Average Closing Values",
+     ylab = "Frequency")
+hist(merge10$NIK.Close.change,
+     main="Japan | Nikkei", 
+     col="black", 
+     breaks = 15,
+     xlab = "Average Closing Values",
+     ylab = "Frequency")
+```
+
+&nbsp;&nbsp;Finally, we obtain the joint distributions between our dependent and key independent variables in **Figure 5**. Remarkable are the trends for a high GDP growth (i.e. over 2%) in the case of Germany and Japan. Here, the intuitive relation between higher GDP growth and a higher level of the index is violated. 
+
+```{r, echo=FALSE, message=FALSE, include=FALSE, cache=FALSE, warning=FALSE}
+#FRA
+p17 <- ggplot(merge10, aes(x = L.FRA.GDP, y = CAC.Close.change)) + 
+  geom_point() + 
+  geom_smooth() +
+  ggtitle("France") +
+  xlab("GDP Growth") +
+  ylab("CAC Growth Rate in %") +
+  theme(axis.text=element_text(size=8),
+        axis.title=element_text(size=8)) +
+  theme(plot.title = element_text(size=10)) 
+#GER
+p15 <- ggplot(merge10, aes(x = L.DEU.GDP, y = DAX.Close.change)) + 
+  geom_point() + 
+  geom_smooth() +
+  ggtitle("Germany") +
+  xlab("GDP Growth") +
+  ylab("DAX Growth Rate in %") +
+  theme(axis.text=element_text(size=8),
+        axis.title=element_text(size=8)) +
+  theme(plot.title = element_text(size=10)) 
+#GBR
+p18 <- ggplot(merge10, aes(x = L.GBR.GDP, y = FTSE.Close.change)) + 
+  geom_point() + 
+  geom_smooth() +
+  ggtitle("Great Britain") +
+  xlab("GDP Growth") +
+  ylab("FTSE Growth Rate in %") +
+  theme(axis.text=element_text(size=8),
+        axis.title=element_text(size=8)) +
+  theme(plot.title = element_text(size=10)) 
+#JPN
+p16 <- ggplot(merge10, aes(x = L.JPN.GDP, y = NIK.Close.change)) + 
+  geom_point() + 
+  geom_smooth() +
+  ggtitle("Japan") +
+  xlab("GDP Growth") +
+  ylab("Nikkei Growth Rate in %") +
+  theme(axis.text=element_text(size=8),
+        axis.title=element_text(size=8)) +
+  theme(plot.title = element_text(size=10)) 
+```
+
+```{r, echo=FALSE, message=FALSE, include=TRUE, cache=FALSE, warning=FALSE, fig.cap="Joint Distributions of DVs and Key IVs"}
+multiplot(p15, p16, p17, p18, cols = 2)
+```
 
 # Analysis
 
@@ -191,8 +342,6 @@ stargazer(M9, M10, M11, M12,
 ```
 
 
-# all variables lagged by two periods
-
 ```{r, echo=FALSE, message=FALSE, include=FALSE, cache=FALSE}
 summary(M13 <- lm(CAC.Close.change ~ L.FRA.GDP + L2.FRA.GDP + L.FRA.infl + L2.FRA.infl + L.FRA.prvconsm + L2.FRA.prvconsm + L.ECB.dep.change + L2.ECB.dep.change + L.WTI.dollar.change + L2.WTI.dollar.change + L.USA.GDP + L2.USA.GDP + year, data = merge10))
 
@@ -232,6 +381,5 @@ lmtest::bgtest(M14, order = 2, order.by = NULL, type = c("Chisq", "F"), data = l
 lmtest::bgtest(M15, order = 2, order.by = NULL, type = c("Chisq", "F"), data = list(), fill = 0)
 lmtest::bgtest(M16, order = 2, order.by = NULL, type = c("Chisq", "F"), data = list(), fill = 0)
 ```
-
 
 # Reference
