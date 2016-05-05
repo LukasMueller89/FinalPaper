@@ -5,6 +5,8 @@ bibliography:
     - Literature.bib
 ---
 
+\DeclareUnicodeCharacter{00A0}{ }
+
 ```{r, echo=FALSE, message=FALSE, include=FALSE, cache=FALSE}
 # Descriptive & Inferential Statistics
 library(stargazer)
