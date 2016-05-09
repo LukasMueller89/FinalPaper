@@ -165,15 +165,11 @@ p9 <- ggplot(data = merge10, aes(x = Date, y = USA.GDP)) + geom_line() + scale_x
 multiplot(p7, p5, p8, p6, cols = 2)
 ```
 
-```{r, echo=FALSE, warning=FALSE, fig.cap="USA GDP growth"}
-multiplot(p9, cols = 2)
-```
-
 &nbsp;&nbsp;&nbsp;&nbsp;**Figure 3** summarizes the main characteristics for the depent and key indepent variables.
 
 ```{r, echo=FALSE, results="asis"}
 # N, Mean St. Deviations, Min and Max for all Variables
-stargazer(merge10[c("CAC.Close.change", "DAX.Close.change", "FTSE.Close.change", "NIK.Close.change", "L.FRA.GDP", "L.DEU.GDP", "L.GBR.GDP"), "L.JPN.GDP"], 
+stargazer(merge10[, c("CAC.Close.change", "DAX.Close.change", "FTSE.Close.change", "NIK.Close.change", "L.FRA.GDP", "L.DEU.GDP", "L.GBR.GDP", "L.JPN.GDP")], 
           type = "latex",
           title = "Descriptive statistics",
           header = FALSE,
@@ -311,6 +307,7 @@ summary(M16 <- lm(NIK.Close.change ~ L.JPN.GDP + L2.JPN.GDP + L.JPN.infl + L2.JP
 ```{r, echo=FALSE, results="asis"}
 stargazer(M13, M14, M15, M16,
           type="latex",
+          font.size = "tiny",
           title = "Final model",
           covariate.labels = c("France GDP growth", "France GDP growth (two q. lag)", "France inflation", "France inflation (two q. lag)", "France pr. consumption", "France pr. consumption (two q. lag)", "Germany GDP growth", "Germany GDP growth (two q. lag)", "Germany inflation", "Germany inflation (two q. lag)", "Germany pr. consumption", "Germany pr. consumption (two q. lag)", "Great Britain GDP growth", "Great Britain GDP growth (two quarter lag)", "Great Britain inflation", "Great Britain inflation (two q. lag)", "Great Britain pr. consumption", "Great Britain pr. consumption (two q. lag)", "Japan GDP growth", "Japan GDP growth (two q. lag)", "Japan inflation", "Japan inflation (two q. lag)", "Japan pr. consumption", "Japan pr. consumption (two q. lag)", "ECB deposit facility", "ECB deposit facility (two q. lag)", "WTI", "WTI (two q. lag)", "1999", "2000", "2001", "2002", "2003", "2004", "2005", "2006", "2007", "2008", "2009", "2010", "2011", "2012", "2013", "2014", "2015"),   
           dep.var.labels=c("CAC40","DAX", "FTSE100", "NIKKEI"),
@@ -319,10 +316,15 @@ stargazer(M13, M14, M15, M16,
 ```
 
 &nbsp;&nbsp;&nbsp;&nbsp;Looking at the model we see that the effect of GDP growth of the previous quarter on national stock indices growth of the current quarter is only statistically significant for France. It is mildly statistically significant (at the 10 percent level) for Germany and Japan. Significance levels for Great Britain do not allow to tell whether the effect is different from zero. This effect becomes insignificant for all countries when lagged by two time periods. The effect is always positive which suggests that a healthy growing economy correlates with a growing stock market. That the effect of GDP growth becomes insignificant (standard errors increase relative to the coefficient) when lagged by two periods suggests that the channel of influence between the real and the financial economy is rather immediate.
+
 &nbsp;&nbsp;&nbsp;&nbsp;The effect of inflation – measured as change of the consumer price index – lagged by one period suggests a statistical significant negative effect for France and Japan. Results suggests that increasing inflation decreases performances of the respective stock market indices in these countries. This negative effect is mildly statistically significant for Germany. Significant levels decrease for all countries when looking at the effect lagged by two periods. The effect however stays mildly statistically significant for France which also showed the highest significance for the effect lagged by one quarter. These results assume that the inflation does have a negative effect on stock market indices. It is not clear how the channel of influence works since theory would suggest that at a higher inflation rate consumers rather invest than safe. 
+
 &nbsp;&nbsp;&nbsp;&nbsp;Coefficients for both variables and both lags – quarterly GDP and change of inflation (i.e. consumer price index) – for Great Britain are statistically insignificant. First, this result can be interpreted as the real sector not being a significant determinant of the financial performance of the stock of the companies included in the FTSE100. One explanation would be that in the Anglo-Saxon economic model, the financial system is a capital market based system as oppose to a system which relies more on financial intermediaries on the continent. Thus, it is much more flexible and volatile independently of the real sector. Second, the statistically insignificant negative coefficient of changes in consumer prices does indicate that people do not decrease savings and increase investments. This can be explained by the different set up of the financial sector in Great Britain as compared to the other countries. Such a financial sector might follow different underlying dynamics. Since banks are not so important people have a different propensity to save. Put differently, people invest their money into stocks anyway regardless of the inflation rate. It should be noted, however, that in Germany and Japan this effect is only significant at the 10 percent level and thus, general conclusions are difficult to draw from these results.
+
 &nbsp;&nbsp;&nbsp;&nbsp;Looking at the quarterly change of the European Central Bank’s deposit facility the variable yield statistically significant results for France, Germany, and Great Britain when lagged by two periods. For Japan the coefficient is statistically significant at the 10 percent level. In simple terms, the negative effect suggests that when the deposit facility interest goes up banks get more interest when storing their money overnight at the ECB. This means that high interest rates incentive the banks to keep money off markets. The negative effect suggests that increasing volumes of money held at banks does hurt the stock market, since less money is in circulation which dampens investments. It seems straightforward that this effect is only mildly statistically significant for Japan since its financial economy is mostly detached form the Eurozone. Moreover, the statistical insignificance of the effect when lagged by one period can be explained by the outside lag of the political decision making process to have effect on the economy. The effects of a change in the central bank’s monetary policy on an individual may not become visible before a certain time has passed.
+
 &nbsp;&nbsp;&nbsp;&nbsp;All other coefficients for all other variables are not statistically significantly different from zero. The effect for changes in private consumption is negative for France Germany and Japan. For France, however, the effect becomes positive when lagged by two periods. The effect is positive for Great Britain. This could suggests again a difference in the propensity to safe and consume respectively. The variables to measure the world economy – quarterly US GDP growth and the change in WTI oil prices – have also no statistically significant effect which is surprising since the US economy is such strong factor determining global economic health. Generally, all year factors display a negative sign and are predominantly statistically insignificant. The negative sign comes with no surprise since the analysis takes the year 2006 as the baseline factor. This year was the peak performing year financially and economically. One year later, in 2007, the financial crisis started in the USA with Lehman Brothers breaking down and continued to spill over to Europe in 2008/2009 culminating in the Greek sovereign debt crisis. Thus, comparing the other ears with 2006 all years would perform worse and thus, have a negative impact on the stock indices performances.
+
 &nbsp;&nbsp;&nbsp;&nbsp;The analysis is subject to certain limitations. First, it should be noted that one has to take results with caution: if GDP of an economy and stock market performance of its best firms are intertwined then the regression measures a reverse causality. The analysis tries to mitigate this endogeneity problem by introducing two lags for GDP growth and each other variable. However, is the reverse causality is too string and both variables would effectively measure the same concepts then the lag is the only variance in the regression. Second, a Breusch-Pagan test suggests that the analysis suffers from heteroscedasticity. We cannot accept the null and thus, have to assume that the variance of the residuals is dependent on the values of the changes in stock indices which renders coefficients inconsistent. Third, the analysis employs a Breusch-Godfrey test to look for serial autocorrelation. The test does indicate that we can accept the null and thus, can assume no serial autocorrelation is present in the data. Consequently, we assume that the standard errors are not underestimated. In summary, with biased coefficients we cannot conclude about the magnitude of the effect on the outcome variable, but we can conclude about its statistical significance since standard errors are efficient.
 
 # Appendix
@@ -427,5 +429,7 @@ stargazer(M9, M10, M11, M12,
           header = FALSE,
           no.space = TRUE)
 ```
+
+\clearpage
 
 # Reference 
