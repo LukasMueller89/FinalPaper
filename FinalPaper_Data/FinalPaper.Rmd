@@ -186,8 +186,6 @@ for (i in 65:68) {
 
 &nbsp;&nbsp;&nbsp;&nbsp;In the next step, **Figure 4** summarizes the frequency distributions of the dependent variables. For now, we assume the variables to be normally distributed. In following research to this assignment we will consider log-transformation for the variables.
 
-**Question: Maybe subset data so that we only use Close. change for Q21999-2015?!**
-
 ```{r, echo=FALSE, fig.cap="Distribution of Dependent Variables: Average Closing Values"}
 par(mfrow=c(2,2))
 hist(merge10$CAC.Close.change,
@@ -217,8 +215,6 @@ hist(merge10$NIK.Close.change,
 ```
 
 &nbsp;&nbsp;&nbsp;&nbsp;Finally, we obtain the joint distributions between our dependent and key independent variables in **Figure 5**. Remarkable are the trends for a high GDP growth (i.e. over 2%) in the case of Germany and Japan. Here, the intuitive relation between higher GDP growth and a higher level of the index is violated. 
-
-**QUESTION: Do we start with GDP also from Q2 1999 ?!**
 
 ```{r, echo=FALSE, message=FALSE, include=FALSE, cache=FALSE, warning=FALSE}
 #FRA
@@ -266,6 +262,8 @@ p16 <- ggplot(merge10, aes(x = L.JPN.GDP, y = NIK.Close.change)) +
 ```{r, echo=FALSE, message=FALSE, include=TRUE, cache=FALSE, warning=FALSE, fig.cap="Joint Distributions of DVs and Key IVs"}
 multiplot(p15, p16, p17, p18, cols = 2)
 ```
+
+\clearpage
 
 # Analysis and Discussion of Results
 
