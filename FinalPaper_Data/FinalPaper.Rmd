@@ -142,7 +142,7 @@ p4 <- ggplot(data = merge10, aes(x = Date, y = FTSE.Close.change)) + geom_line()
         axis.title=element_text(size=8))
 ```
 
-```{r, echo=FALSE, warning=FALSE, fig.cap="Dependent Variables: % change of average closing values of national stock indices over time"}
+```{r, echo=FALSE, warning=FALSE, fig.cap="Dependent variables: % change of average closing values of national stock indices over time"}
 multiplot(p3, p1, p4, p2, cols = 2)
 ```
 
@@ -171,21 +171,21 @@ p9 <- ggplot(data = merge10, aes(x = Date, y = USA.GDP)) + geom_line() + scale_x
 multiplot(p7, p5, p8, p6, cols = 2)
 ```
 
-&nbsp;&nbsp;&nbsp;&nbsp;The table below summarizes the main characteristics for the depent and key indepent variables for our analyzed time period from Q1 1999 to Q4 2015. In terms of the changes of the national indices, the DAX reached the highest (+27.6%) and the NIKKEI the lowest (-31.8%) values. Japan experienced both the highest and lowest values for GDP growth in the time frame.
+&nbsp;&nbsp;&nbsp;&nbsp;The table below summarizes the main characteristics for the depent and key indepent variables for our analyzed time period from Q1 1999 to Q4 2015. In terms of the changes of the national indices, the DAX reached the highest (+27.6%) and the NIKKEI the lowest (-31.8%) values. Japan experienced the highest (2.7%) and Germany the lowest (-4.5%) values for GDP growth in the time frame.
 
 ```{r, echo=FALSE, results="asis"}
 # N, Mean St. Deviations, Min and Max for all Variables
 stargazer(merge10[, c("CAC.Close.change", "DAX.Close.change", "FTSE.Close.change", "NIK.Close.change", "L.FRA.GDP", "L.DEU.GDP", "L.GBR.GDP", "L.JPN.GDP")], 
           type = "latex",
-          covariate.labels = c("CAC40 Average Closing", "DAX Average Closing", ""),
+          covariate.labels = c("CAC40 Average Closing", "DAX Average Closing", "FTSE100 Average Closing", "NIKKEI Average Closing", "France GDP growth", "Germany GDP growth", "Great Britain GDP growth"),
           title = "Descriptive statistics",
           header = FALSE,
           digits=1)
 ```
 
-&nbsp;&nbsp;&nbsp;&nbsp;In the next step, **Figure 4** summarizes the frequency distributions of the dependent variables. For now, we assume the variables to be normally distributed. In following research to this assignment we will consider log-transformation for the variables.
+&nbsp;&nbsp;&nbsp;&nbsp;In the next step, the histograms below summarize the frequency distributions of the dependent variables. For now, we assume the variables to be normally distributed. In following research to this assignment we should, however, consider log-transformation especially in the case of Japan.
 
-```{r, echo=FALSE, fig.cap="Distribution of Dependent Variables: Average Closing Values"}
+```{r, echo=FALSE, fig.cap="Dependent variables: Frequency distribution"}
 par(mfrow=c(2,2))
 hist(merge10$CAC.Close.change,
      main="France | CAC40", 
@@ -213,7 +213,9 @@ hist(merge10$NIK.Close.change,
      ylab = "Frequency")
 ```
 
-&nbsp;&nbsp;&nbsp;&nbsp;Finally, we obtain the joint distributions between our dependent and key independent variables in **Figure 5**. Remarkable are the trends for a high GDP growth (i.e. over 2%) in the case of Germany and Japan. Here, the intuitive relation between higher GDP growth and a higher level of the index is violated. 
+\clearpage
+
+&nbsp;&nbsp;&nbsp;&nbsp;Finally, we obtain the joint distributions between our dependent and key independent variables for the four countries below. 
 
 ```{r, echo=FALSE, message=FALSE, include=FALSE, cache=FALSE, warning=FALSE}
 #FRA
@@ -410,9 +412,10 @@ stargazer(M9, M10, M11, M12,
           no.space = TRUE)
 ```
 
-# Acknowledgment 
+# Acknowledgment R-packe 
 
-@R-magrittr
+[@R-magrittr]
+
 \clearpage
 
 
