@@ -65,11 +65,11 @@ In the second, more narrow step, we focus on the relationsship between GDP growt
 
 # Research Question and Hypothesis
 
-&nbsp;&nbsp;&nbsp;&nbsp;*Does national GDP growth lead to growing national stock market indices?*
+&nbsp;&nbsp;&nbsp;&nbsp;*Do changes in GDP growth lead to changes in the country's national stock market index?*
 
-* H~0~: There are statistically significant effects of national GDP growth on the growth rates of national stock market indices.
+* H~0~: There are statistically significant effects of GDP growth on the growth rates of a country's stock market index.
 
-* H~1~: There are no statistically significant effects of national GDP growth on the growth rates of national stock market indices.
+* H~1~: There are no statistically significant effects of GDP growth on the growth rates of a country's stock market index.
 
 
 # Data and Variables of Interest 
