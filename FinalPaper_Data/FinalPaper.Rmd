@@ -42,14 +42,9 @@ source("FinalPaper_Code/FinalPaper_Variables.R")
 
 # Introduction
 
-<<<<<<< Updated upstream
-&nbsp;&nbsp;&nbsp;&nbsp;In this paper, we investigate an odd relation: GDP growth and national equity prices; that is national stock indices. The intuitive assumption that one has automatically is fairly straight forward: The better the economy performs, the higher expectations of market participants, investments and trust in the future. In turn, we should - naturally - obtain an increase the level of national stock market indices. However, the more interesting question is beyond this intuitive assumption: \newline
-&nbsp;&nbsp;&nbsp;&nbsp;Focusing on four OECD countries (Germany, France, Great Britain and Japan) we investigate on the question whether there are different levels of statistical significance for the effect of GDP growth on equity prices. Note that we do not compare the size of the effects (i.e. coefficients) since we investigate on different dependent variables. Rather, we compare the statistical significance across the four countries of interest. For equity prices, we take the four major national stock market indices of the countries as our dependent variable: The CAC40 (France), DAX (Germany), FTSE100 (Great Britain) and the NIKKEI (Japan). We control for a row of other, lagged explanatory determinants - not only from within the national economy (e.g. unemployment rate) but also external, more global factors (e.g. oil prices). We elaborate on the specific covariates below. For our analysis we focus on the time period between the second quarter of 1999 (where ECB interest rates became relevant) and fourth quarter of 2015.
-=======
 &nbsp;&nbsp;&nbsp;&nbsp;Nowadays, equity prices have become the nexus between capitalism and our daily life on the globe. Especially the financial crisis and the following European sovereign crisis darken the beauty of this nexus that was once proclaimed to be a good - if not the best - example of a functioning market mechanism.\newline
 In this paper, we investigate an odd relation that is a part of the nexus: GDP growth and a subset of national equity prices; that is national stock indices. The intuitive assumption that one has automatically is fairly straight forward: The better the economy performs, the higher expectations of market participants, investments and trust in the future. In turn, we should - naturally - obtain an increase the **level** of national stock market indices given good economic performance within a country. In a way it is reasonable to argue, that national stock indices serve as a proxy of the economy. However, the more interesting question is beyond this intuitive assumption: \newline
 &nbsp;&nbsp;&nbsp;&nbsp;Focusing on four OECD countries (Germany, France, Great Britain and Japan) we investigate whether GDP growth has an effect of the **changes** of the indices. If so, are there different levels of statistical significance for the effect of GDP growth across different countries? That is, we do not compare the size of the effects (i.e. coefficients) since we investigate on different dependent variables. We take the four major national stock market indices of the countries as our dependent variable: The CAC40 (France), DAX (Germany), FTSE100 (Great Britain) and the NIKKEI (Japan). We control for a row of other, lagged explanatory determinants - not only from within the national economy (e.g. inflation rate) but also external, more global factors (e.g. oil price). We elaborate on the specific covariates below. For our analysis we focus on the time period between the beginning of 1999 (where ECB interest rates became relevant) and the end of 2015. 
->>>>>>> Stashed changes
 
 &nbsp;&nbsp;&nbsp;&nbsp;The rest of this paper is structured as follows:
 
@@ -269,6 +264,7 @@ multiplot(p15, p16, p17, p18, cols = 2)
 # Analysis and Discussion of Results
 
 &nbsp;&nbsp;&nbsp;&nbsp;For the analysis section we provide our comprehensive model below. However, before going into the most promising model that we found during our research, we would like to offer a very basic model as a starting point of the analysis. We only regress the change of the four national stock indices on the lagged quaterly GDP growth of the respective country.
+
 ```{r, echo=FALSE, message=FALSE, include=FALSE, cache=FALSE}
 M1 <- lm(CAC.Close.change ~ L.FRA.GDP, data = merge10)
 
@@ -420,9 +416,21 @@ stargazer(M9, M10, M11, M12,
           no.space = TRUE)
 ```
 
-# Acknowledgment R-packe 
+\clearpage
 
+# Acknowledgment R-packages
+
+[@CiteR]
 [@R-magrittr]
+[@R-stargazer]
+[@R-ggplot2]
+[@R-DAAG]
+[@R-plyr]
+[@R-reshape]
+[@R-zoo]
+[@R-Rmisc]
+[@R-repmis]
+[@R-DataCombine]
 
 \clearpage
 
