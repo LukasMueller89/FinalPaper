@@ -312,7 +312,7 @@ stargazer(M13, M14, M15, M16,
           no.space = TRUE)
 ```
 
-&nbsp;&nbsp;&nbsp;&nbsp;Looking at the model we see that the effect of GDP growth of the previous quarter on national stock indices growth of the current quarter is only statistically significant in the case of France. It is weakly significant (at the 10 percent level) for Germany and Japan. Significance levels for Great Britain do not allow to tell whether the effect is different from zero. The effect of GDP growth becomes insignificant for all countries when lagged by two time periods (i.e. quarters). The effect is always positive which suggests that a healthy growing economy correlates with a growing stock market. That the effect of GDP growth becomes insignificant (standard errors increase relative to the coefficient) when lagged by two periods suggests that the channel of influence between the real and the financial economy is rather immediate.\newline
+&nbsp;&nbsp;&nbsp;&nbsp;Looking at **Table 7** we see that the effect of GDP growth of the previous quarter on national stock indices growth of the current quarter is only statistically significant in the case of France. It is weakly significant (at the 10 percent level) for Germany and Japan. Significance levels for Great Britain do not allow to tell whether the effect is different from zero. The effect of GDP growth becomes insignificant for all countries when lagged by two time periods (i.e. quarters). The effect is always positive which suggests that a healthy growing economy correlates with a growing stock market. That the effect of GDP growth becomes insignificant (standard errors increase relative to the coefficient) when lagged by two periods suggests that the channel of influence between the real and the financial economy is rather immediate.\newline
 
 &nbsp;&nbsp;&nbsp;&nbsp;The effect of inflation measured as the change of the consumer price index lagged by one period is negative and statistical significant for France and Japan. Results suggests that increasing inflation decreases performances of the respective stock market indices in these countries. This negative effect is weakly significant for Germany. Significant levels decrease for all countries when looking at the effect lagged by two periods. The effect however stays weakly significant for France which also showed the highest significance for the effect lagged by one quarter. These results suggest that the inflation does have a negative effect on stock market indices. It is not clear how the channel of influence works since theory would suggest that at a higher inflation rate consumers rather invest than safe. \newline
 
@@ -364,11 +364,19 @@ plot(M4, which = 2)
 
 ## Variance Inflation Factor Test
 
-```{r, echo=FALSE, message = TRUE, results="asis"}
-DAAG::vif(M13)
-DAAG::vif(M14)
-DAAG::vif(M15)
-DAAG::vif(M16)
+```{r, echo=FALSE, message = TRUE}
+FRA <- DAAG::vif(M13)
+DEU <- DAAG::vif(M14)
+GRB <- DAAG::vif(M15)
+JPN <- DAAG::vif(M16)
+
+a <- cbind(FRA, DEU, GRB, JPN)
+
+rownames(a) <- c('GDP growth', 'GDP growth (two q. lag)', 'inflation', 'inflation (two q. lag)', 'pr. consumption', 'pr. consumption (two q. lag)', 'ECB deposit facility', 'ECB deposit facility (two q. lag)', 'WTI', 'WTI (two q. lag)', 'USA GDP growth', 'USA GDP growth (two q. lag)', '1999', '2000', '2001', '2002', '2003', '2004', '2005', '2007', '2008', '2009', '2010', '2011', '2012', '2013', '2014', '2015')
+
+knitr::kable(a, digits = 2, caption = 'Variance Inflation Factor')
+
+rm(a, FRA, DEU, GBR, JPN)
 ```
 
 ## Breusch-Pagan Test
