@@ -267,7 +267,7 @@ multiplot(p15, p16, p17, p18, cols = 2)
 
 # Analysis and Discussion of Results
 
-&nbsp;&nbsp;&nbsp;&nbsp;For the analysis section we provide our comprehensive model below. However, before going into the most promising model that we found during our research, we would like to offer a very basic model as a starting point of the analysis. We only regress the development of the four national stock indices on the GDP growth of the related country.  
+&nbsp;&nbsp;&nbsp;&nbsp;For the analysis section we provide our comprehensive model below. However, before going into the most promising model that we found during our research, we would like to offer a very basic model as a starting point of the analysis. We only regress the change of the four national stock indices on the lagged quaterly GDP growth of the respective country.
 ```{r, echo=FALSE, message=FALSE, include=FALSE, cache=FALSE}
 M1 <- lm(CAC.Close.change ~ L.FRA.GDP, data = merge10)
 
@@ -287,6 +287,8 @@ stargazer(M1, M2, M3, M4,
           header = FALSE,
           no.space = TRUE)
 ```
+
+The basic model shows only for France a statistically significant relationship between change in quaterly GDP growth and change in the stock market indice CAC 40. All other coefficients are statisitcally insignificant but show the same positive sign. This result forshadows the significance of the coefficients for lagged quaterly GDP growth in the extended model. The coefficient for France will not change its level of significance when controlling for inflation, private consumption, the Europen Central Bank's deposit facility rate, the change in World Texas Intermediate prices, quaterly US GDP growth, and year factors. The coefficients for Germany, Great Britain, and Japan, however, become weakly statistically significant (at the 10 percent level). This might suggest a certian degree of robustness. It should be kept in mind that the stock indices measure the stock performances of a few selected companies. Thus, the four coefficients should be compared with caution. 
 
 ```{r, echo=FALSE, message=FALSE, include=FALSE, cache=FALSE}
 summary(M13 <- lm(CAC.Close.change ~ L.FRA.GDP + L2.FRA.GDP + L.FRA.infl + L2.FRA.infl + L.FRA.prvconsm + L2.FRA.prvconsm + L.ECB.dep.change + L2.ECB.dep.change + L.WTI.dollar.change + L2.WTI.dollar.change + L.USA.GDP + L2.USA.GDP + year, data = merge10))
