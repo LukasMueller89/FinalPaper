@@ -8,7 +8,7 @@ date: May 2016
 output: 
     html_document:
       fig_width: 7
-      fig_height: 4
+      fig_height: 3
       fig_caption: true
       toc: true
       toc_float:
@@ -49,27 +49,28 @@ A project by [Daniel Limberg](https://github.com/DanielLimberg) and [Lukas Müll
 <br>
 <br>
 
-&nbsp;&nbsp;&nbsp;&nbsp;If you would like to replicate our original paper, please fork our project from <a href="https://github.com/LukasMueller89/FinalPaper"> Project Page on Github</a>.If you have feedback, experience any issues using this site or simply find yourself offended by what we present, please let us <a href="https://github.com/LukasMueller89/FinalPaper/issues">know</a>.
+&nbsp;&nbsp;&nbsp;&nbsp;If you would like to replicate our original paper, please fork our project from <a href="https://github.com/LukasMueller89/FinalPaper"> the Project Page on Github</a>.If you have feedback, experience any issues using this site or simply find yourself offended by what we present, please let us <a href="https://github.com/LukasMueller89/FinalPaper/issues">know</a>.
 
 # Introduction
 <br>
 &nbsp;&nbsp;&nbsp;&nbsp;Nowadays, equity prices have become the nexus between capitalism and our daily life on the globe. Especially the financial crisis and the following European sovereign debt crisis darken the beauty of this nexus, that was once proclaimed to be a good - if not the best - example of a functioning market mechanism.\newline
 On this project page we present the results of our study in a nutshell: What is the key background for our research and what are our key assumptions and findings?
 <br>
-We investigate an odd relation that is a part of the nexus: GDP growth and a subset of national equity prices; that is national stock indices. The intuitive assumption that one automatically has is fairly straight forward: The better the economy performs, the higher expectations of market participants, investments and trust in the future. In turn, we should - naturally - obtain an increase in the *level* of a national stock market indices given good economic performance within a country. In a way it is reasonable to argue, that national stock indices serve as a proxy of the economy. However, the more interesting question is beyond this intuitive assumption: \newline
-&nbsp;&nbsp;&nbsp;&nbsp;Focusing on four OECD countries (Germany, France, Great Britain and Japan) we investigate whether GDP growth has an effect of the *changes* of the indices. If so, are there different levels of statistical significance for the effect of GDP growth across the different countries? That is, we do not compare the size of the effects (i.e. coefficients) since we investigate on different dependent variables. We take the four major national stock market indices of the countries as our dependent variable: The CAC40 (France), DAX (Germany), FTSE100 (Great Britain) and the NIKKEI (Japan). We control for a row of other, lagged explanatory determinants - not only from within the national economy (e.g. inflation rate) but also external, more global factors (e.g. oil price). We elaborate on the specific covariates below. For our analysis we focus on the time period between the beginning of 1999 (where ECB interest rates became relevant) and the end of 2015.
+&nbsp;&nbsp;&nbsp;&nbsp;We investigate an odd relation that is a part of the nexus: GDP growth and a subset of national equity prices; that is national stock indices. The intuitive assumption that one automatically has is fairly straight forward: The better the economy performs, the higher expectations of market participants, investments and trust in the future. In turn, we should - naturally - obtain an increase in the *level* of a national stock market indices given good economic performance within a country. In a way it is reasonable to argue, that national stock indices serve as a proxy of the economy. However, the more interesting question is beyond this intuitive assumption:
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;We focus on four OECD countries: **France**, **Germany**, **Great Britain** and **Japan**. And we investigate whether GDP growth has an effect of the *changes* of the indices. If so, are there different levels of statistical significance for the effect of GDP growth across the different countries? That is, we do not compare the size of the effects (i.e. coefficients) since we investigate on different dependent variables. We take the four major national stock market indices of the countries as our dependent variable: The CAC40 (France), DAX (Germany), FTSE100 (Great Britain) and the NIKKEI (Japan). We control for a row of other, lagged explanatory determinants - not only from within the national economy (e.g. inflation rate) but also external, more global factors (e.g. oil price). We elaborate on the specific covariates below. For our analysis we focus on the time period between the beginning of 1999 (where ECB interest rates became relevant) and the end of 2015.
 
 # What Others Found
 <br>
-Naturally, we are not the first ones to come up with the idea, that it might be interesting to have a closer look at the relationship of GDP growth and (national) stock market indices. So in the following, let us very briefly summarize what scolars found out about the topic.
-
+&nbsp;&nbsp;&nbsp;&nbsp;Naturally, we are not the first ones to come up with the idea, that it might be interesting to have a closer look at the relationship of GDP growth and (national) stock market indices. So in the following, let us very briefly summarize what scolars found out about the topic.
+<br>
 &nbsp;&nbsp;&nbsp;&nbsp;The field provides various studies which focus on the relationship between GDP growth (or macroeconomic determinants of GDP growth) and stock markets in general. For example, Claessens et al. "study how local stock market development and internationalization listing, trading, and capital raising in international exchanges are related to economic fundamentals" [@claessens2006stock]. Duca states that there is a clear co-movement between stock market prices and GDP in developed economies. Assuming causal effects he finds that "the level of economic activity in a country can potentially depend on the stock market amongst other variables" [@duca2007relationship]. On the other hand, Ritter finds that cross-country correlation of real stock returns and per capita GDP growth over 1900-2002 is negative. This is mainly traced back to the fact that increases in capital and labor inputs (i.e. two main determinants of GDP growth) in new corporations (i.e. representing innovation) do not necessarily imply higher dividends [@ritter2005economic].
-
+<br>
 &nbsp;&nbsp;&nbsp;&nbsp;For 42 emerging markets Yartey examines the effect of institutional and macroeconomic determinants on stock market developments [@yartey2008determinants]. Similar studies focus on these determinants for a wide range of countries. These include OECD countries like Belgium [@van2006stock], France [@sraer2007performance], Germany [@antonios2010stock] or New Zealand from 1990 to 2003 [@diebold2008macroeconomic]. And developing markets such as Malaysia [@rahman2009macroeconomic] or BRICS-countries like India [@singh2010causal, @agrawalla2007causality] and South Africa [@hsing2011stock] in general. 
 
-# What We Wanted to Find
+# What We Aimed to Find
 <br>
-Having outlined what the field has already done, let us now turn to our own Research Question and Hypothesis. They read as follows.
+&nbsp;&nbsp;&nbsp;&nbsp;Having outlined what the field has already done, let us now turn to our own Research Question and Hypothesis. They read as follows.
 
 *Do changes in GDP growth lead to changes in the country's national stock market index?*
 
@@ -80,12 +81,14 @@ Having outlined what the field has already done, let us now turn to our own Rese
 # Variables of Interest 
 <br>
 &nbsp;&nbsp;&nbsp;&nbsp;In the following we introduce our variables of interest and briefly summarize how they fit our purpose. All variables were collected on (or aggregated to) a quarterly format.  
+<br>
+We derive all our data from the [ECB database](http://sdw.ecb.europa.eu),
+[Yahoo Finance](http://finance.yahoo.com/market-overview/?bypass=true) and the [OECD database](http://stats.oecd.org).
 
 | **Variables**       | Number | Origin of Data | Time Range               |
 |---------------------|--------|----------------|--------------------------|
 | Dependent Variables | 4      | Yahoo Finance  | Quarter 1 1999 - Q4 2015 |
 | Covariates          | 6      | ECB, OECD      | Quarter 1 1999 - Q4 2015 |
-
 
 ## Dependent Variables
 <br>
@@ -115,6 +118,7 @@ Having outlined what the field has already done, let us now turn to our own Rese
 | Private consumption             | % change of share of GDP to prev. quarter |
 
 &nbsp;&nbsp;&nbsp;&nbsp;From the ECB database we use the deposit facility (i.e. interest rate for banks^[We rakishly use the term "banks" for this paper. While "Financial Institutions" would be more appropriate to apply, we dare to continue with "banks" for reasons of simplicity.] making overnight deposits with the Eurosystem). Quite noticeable is the fact that, since June 2014, the rate is negative. That is, quite counter-intuitive, banks are penalized when making deposits.\newline
+<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Again using OECD data, we also take the quarterly GDP growth rate of the USA as a proxy for the general development of the world economy. The economy of the USA has a profound impact on other national business cycles, and national recessions in the US have sever repercussions across the globe. This was demonstrated again after 2007 when the US subprime mortgage crisis turned into a global recession. Moreover, the West Texas Intermediate (WTI) price changes are taken as an indicator of global economic health and a crucial determinant of economic growth.
 
 | **Covariates**        | Measured                                 |
@@ -127,11 +131,11 @@ Having outlined what the field has already done, let us now turn to our own Rese
 
 # Some Overviews
 <br>
-&nbsp;&nbsp;&nbsp;&nbsp;Before going into some of our results let us describe what we can already see and understand without actually going into more sophisticated analysis.
+&nbsp;&nbsp;&nbsp;&nbsp;Before going into some of our results let us describe what we can already see and understand without actually going into more sophisticated analysis. We shall start with our dependent variables, then have a closer look into our key independent variables and finally look how they correlate.
 
 ## Dependent Variables
 <br>
-Below we present a first overview of the four dependent variables: The % change of the average closing value of the indices to the previous quarter. The graphs range from the first quarter in 1999 to the last quarter in 2015. Given the financial crisis, the CAC40, DAX, FTSE100 and NIKKEI share a remarkable but unsurprising downturn in the end of 2008 and in early 2009. 
+&nbsp;&nbsp;&nbsp;&nbsp;Below we present a first interactive overview of the four dependent variables: The % change of the average closing value of the indices to the previous quarter. The graphs range from the first quarter in 1999 to the last quarter in 2015. Given the financial crisis, the CAC40, DAX, FTSE100 and NIKKEI share a remarkable but unsurprising downturn in the end of 2008 and in early 2009. 
 
 ```{r, echo=FALSE, message=FALSE, include=FALSE, cache=FALSE}
 ### Germany
@@ -227,47 +231,15 @@ p8 <- ggplot(data = merge10, aes(x = Date, y = GBR.GDP)) +
   theme(legend.position="none")
 ```
 
-```{r, echo=FALSE, results="asis", warning=FALSE, fig.cap="Key independent variables: GDP growth over time"}
+```{r, echo=FALSE, results="asis", warning=FALSE}
 multiplot(p7, p5, p8, p6, cols = 2)
-```
-
-## Frequency Distribution Dependent Variables
-<br>
-&nbsp;&nbsp;&nbsp;&nbsp;In the next step, the histograms below summarize the frequency distributions of the dependent variables. Please note the different scales of the y-axes and the x-axis in case of Japan. It becomes visible that all four national indices with their % change of the average closing value cluster around 0, although the CAC40 and the DAX are slightly scewed to the right. For now, we assume the variables to be normally distributed. In following research to this assignment we should, however, consider log-transformation especially in the case of Japan.
-\newline
-
-```{r, echo=FALSE, results="asis", fig.cap="Dependent variables: Frequency distributions"}
-par(mfrow=c(2,2))
-hist(merge10$CAC.Close.change,
-     main="France | CAC40", 
-     col="#000099", 
-     breaks = 15,
-     xlab = "% change of average closing values",
-     ylab = "Frequency")
-hist(merge10$DAX.Close.change,
-     main="Germany | DAX", 
-     col="#000099", 
-     breaks = 15,
-     xlab = "% change of average closing values",
-     ylab = "Frequency")
-hist(merge10$FTSE.Close.change,
-     main="Great Britain | FTSE100", 
-     col="#000099", 
-     breaks = 15,
-     xlab = "% change of average closing values",
-     ylab = "Frequency")
-hist(merge10$NIK.Close.change,
-     main="Japan | Nikkei", 
-     col="#000099", 
-     breaks = 15,
-     xlab = "% change of average closing values",
-     ylab = "Frequency")
 ```
 
 ### Joint Distributions
 <br>
-&nbsp;&nbsp;&nbsp;&nbsp;Below, we obtain the joint distributions between our dependent and key independent variables for the four countries. Here, we use GDP growth lagged by one quarter, which we also use in the following analysis section below. The key dependent variables on the y-axes are the % changes of average closing values for the given indices.\newline
-Remarkable are the few outliers in negative GDP growth for Germany, France, and Japan, which suggest a downward trend. However, the confindence intervals already indicate that one needs to be careful with drawing conclusions from this section of the graphics. More interesting is the general upward trend for Germany, Japan, and Great Britain that starts around and above a GDP growth of 0%. This supports the original idea we described earlier on: A well performing national economy should, in theory, lead to a rise in the national stock market index. Quite to the contrary, we see rather a stagnation instead of a rise around and above a GDP growth of 0% for Japan. While we need regression modeling to draw true conclusions from this correlation, it should also be mentioned again that the NIKKEI combines the highest number of equities of all dependent variables. It is probably fair to assume that the high number of equities balances the relationship. 
+&nbsp;&nbsp;&nbsp;&nbsp;Below, we present the joint distributions between our dependent and key independent variables for the four countries in four interactive graphs. Here, we use GDP growth lagged by one quarter, which we also use in the following analysis section below. The key dependent variables on the y-axes are the % changes of average closing values for the given indices.
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Remarkable are the few outliers in negative GDP growth for Germany, France, and Japan, which suggest a downward trend. However, the confindence intervals already indicate that one needs to be careful with drawing conclusions from this section of the graphics. More interesting is the general upward trend for Germany, Japan, and Great Britain that starts around and above a GDP growth of 0%. This supports the original idea we described earlier on: A well performing national economy should, in theory, lead to a rise in the national stock market index. Quite to the contrary, we see rather a stagnation instead of a rise around and above a GDP growth of 0% for Japan. While we need regression modeling to draw true conclusions from this correlation, it should also be mentioned again that the NIKKEI combines the highest number of equities of all dependent variables. It is probably fair to assume that the high number of equities balances the relationship. 
 
 ```{r, echo=FALSE, message=FALSE, include=FALSE, cache=FALSE, warning=FALSE}
 #FRA
@@ -319,10 +291,9 @@ ggplotly(p18)
 ggplotly(p16)
 ```
 
-
 # What We Found
 <br>
-&nbsp;&nbsp;&nbsp;&nbsp;Looking at the regression table below we see that the effect of GDP growth of the previous quarter on national stock indices growth of the current quarter is only statistically significant in the case of France. All variables are lagged by one quarter and two quartes.^[The VIF test sugests an acceptable degree of collinearity between the variables for this model. See Appendix.] It is weakly significant (at the 10 percent level) for Germany and Japan. Significance levels for Great Britain do not allow to tell whether the effect is different from zero. The effect of GDP growth becomes insignificant for all countries when lagged by two time periods (i.e. quarters). The effect is always positive which suggests that a healthy growing economy correlates with a growing stock market. That the effect of GDP growth becomes insignificant (standard errors increase relative to the coefficient) when lagged by two periods suggests that the channel of influence between the real and the financial economy is rather immediate.\newline
+&nbsp;&nbsp;&nbsp;&nbsp;Finally, let us have a look into what we have found so far. Looking at the regression table below we see that the effect of GDP growth of the previous quarter on national stock indices growth of the current quarter is only statistically significant in the case of France. All variables are lagged by one quarter and two quartes.^[The VIF test sugests an acceptable degree of collinearity between the variables for this model. See Appendix.] It is weakly significant (at the 10 percent level) for Germany and Japan. Significance levels for Great Britain do not allow to tell whether the effect is different from zero. The effect of GDP growth becomes insignificant for all countries when lagged by two time periods (i.e. quarters). The effect is always positive which suggests that a healthy growing economy correlates with a growing stock market. That the effect of GDP growth becomes insignificant (standard errors increase relative to the coefficient) when lagged by two periods suggests that the channel of influence between the real and the financial economy is rather immediate.\newline
 
 ```{r, echo=FALSE, message=FALSE, include=FALSE, cache=FALSE}
 summary(M13 <- lm(CAC.Close.change ~ L.FRA.GDP + L2.FRA.GDP + L.FRA.infl + L2.FRA.infl + L.FRA.prvconsm + L2.FRA.prvconsm + L.ECB.dep.change + L2.ECB.dep.change + L.WTI.dollar.change + L2.WTI.dollar.change + L.USA.GDP + L2.USA.GDP + year, data = merge10))
@@ -346,25 +317,31 @@ stargazer(M13, M14, M15, M16,
 ```
 <br>
 &nbsp;&nbsp;&nbsp;&nbsp;The effect of inflation measured as the change of the consumer price index lagged by one period is negative and statistical significant for France and Japan. Results suggests that increasing inflation decreases performances of the respective stock market indices in these countries. This negative effect is weakly significant for Germany. Significant levels decrease for all countries when looking at the effect lagged by two periods. The effect however stays weakly significant for France which also showed the highest significance for the effect lagged by one quarter. These results suggest that the inflation does have a negative effect on stock market indices. It is not clear how the channel of influence works since intuition would suggest that at a higher inflation rate consumers rather invest than safe. \newline
-
+<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Coefficients for both variables and both lags of quarterly GDP and change of inflation (i.e. consumer price index) for Great Britain are statistically insignificant. First, this result can be interpreted as the real sector not being a significant determinant of the financial performance of the stock of the companies included in the FTSE100. One explanation would be that in the Anglo-Saxon economic model, the financial system is a capital market based system as opposed to a system which relies more on financial intermediaries such as on the continent. Thus, it is much more flexible and volatile independently of the real sector. Second, the statistically insignificant, negative coefficient of changes in consumer prices does indicate that people do not decrease savings and increase investments. This can be explained by the different set up of the financial sector in Great Britain as compared to the other countries. Such a financial sector might follow different underlying dynamics. Since these financial markets rely far less on banks people have a different propensity to save. Put differently, investments into stocks take place anyway regardless of the inflation rate. It should be noted, however, that in Germany and Japan this effect is only significant at the 10 percent level and thus, general conclusions are difficult to draw from these results.\newline
-
+<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Looking at the quarterly change of the European Central Bank's deposit facility the variable yields negative, statistically significant results for France, Germany, and Great Britain when lagged by two periods. For Japan the coefficient is only statistically significant at the 10 percent level. In simple terms, the negative effect suggests that when the deposit facility interest increases, banks' revenues increase when storing their money overnight at the ECB. This implies that a high interest rate incentives the banks to keep money off markets. The negative effect suggests that increasing volumes of money held at banks does hurt the stock market: Less liquidity dampens investments. It seems straightforward that this effect is only weakly significant for Japan since Japanese banks are not directly affected by changes of the deposit facility. Moreover, the statistical insignificance of the effect, when lagged by one period, can be explained by the outside lag of the political decision making process. Such decisions need at least six months to have an actual effect on the economy. The effects of a change in the central bank's monetary policy on an individual may not become visible before a certain time has passed.\newline
-
+<br>
 &nbsp;&nbsp;&nbsp;&nbsp;All other coefficients for all other variables are not statistically significantly different from zero. The effect for changes in private consumption is negative for France Germany and Japan. For France, however, the effect becomes positive when lagged by two periods. The effect is positive for Great Britain. This could suggests again a difference in the propensity to safe and consume respectively. The variables to measure the world economy as quarterly US GDP growth and the change in WTI oil prices also have no statistically significant effect which is surprising since the US economy is traditionally viewed as a strong factor determining global economic health. Compared to the baseline year of 2006, generally all year factors display a negative sign and are predominantly statistically insignificant. 2006 was the peak performing year financially and economically. One year later, in 2007, the financial crisis started in the USA with the breakdown of Lehman Brothers in September and continued to spill over to Europe in 2008/2009 culminating in the European sovereign debt crisis. Thus, comparing the other years with 2006, all years would perform worse and thus, have a negative impact on the stock indices performances relative to 2006. Except for the years 2001, 2002, and 2008 factors are generally not statistically significant.\newline
-
+<br>
 &nbsp;&nbsp;&nbsp;&nbsp;The final model does explain a relatively larege portion of the variance in the dependent variable. When looking at the $Adjusted-R^{2}$ which is lowest for Germany with $Adj.-R^{2} = .36$ and highest for France with $Adj.-R^{2} = .53$ it should be noted, however, that a direct comparison is difficult to make. The four dependent variables are all differently composed, and thus, variables measuring the same concept may have a different effect across the four regression models.\newline
-
+<br>
 &nbsp;&nbsp;&nbsp;&nbsp;Finally, the results suggest to not reject the Null that there are statistically significant effects of GDP growth on the growth rates of a country's stock index for France. For all other national stock indices we cannot accept the Null and have to conclude that there are no statistically significant effects of GDP growth on the growth rates of a country's stock market index.
 
 # Limitations
 <br>
-&nbsp;&nbsp;&nbsp;&nbsp;The analysis is subject to certain limitations.^[Diagnostics results can be found in the Appendix] All tests are done for each regression separately. First, it should be noted that one has to take results with caution: if GDP of an economy and stock market performance of its best firms and equities are intertwined then the regression model estimates suffer from reverse causality. The analysis tries to mitigate this endogeneity problem by introducing two lags for GDP growth and each other variable. However, if the reverse causality is too strong and both variables would effectively measure the same concept, then the lag is the only variance in the regression. Second, a Breusch-Pagan test suggests that the analysis suffers from heteroskedasticity. We cannot accept the null and thus, have to assume that the variance of the residuals is dependent on the values of the changes in stock indices which renders coefficients inconsistent. Third, the analysis employs a Breusch-Godfrey test to look for serial autocorrelation. The test does indicate that we can accept the null and thus, can assume no serial autocorrelation is present in the data. Consequently, we assume that the standard errors are not underestimated. Since we deal with a time series we conclude that there is an acceptable degree of heteroskedasticity. The result of the Breusch-Pagan test might not be as reliable in the presence of lagged dependent variables. Fourth, the external validity of the results must be seen with utmost caution. We have only looked at four national stock indices which are all composed differently and measure stock performances in industrial nations of the OECD. In summary, we can conclude that the coefficients statistical significance is reliable to a certain degree since standard errors are assumed to be efficient. However, internal validity is harmed by the small sample size. Concerning external validity, results should only be taken as indicative and not as final conclusive evidence since they rely on OECD countries only.
+&nbsp;&nbsp;&nbsp;&nbsp;The analysis is subject to certain limitations.^[Diagnostics results can be found in the Appendix] All tests are done for each regression separately. First, it should be noted that one has to take results with caution: if GDP of an economy and stock market performance of its best firms and equities are intertwined then the regression model estimates suffer from reverse causality. The analysis tries to mitigate this endogeneity problem by introducing two lags for GDP growth and each other variable. However, if the reverse causality is too strong and both variables would effectively measure the same concept, then the lag is the only variance in the regression. 
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Second, a Breusch-Pagan test suggests that the analysis suffers from heteroskedasticity. We cannot accept the null and thus, have to assume that the variance of the residuals is dependent on the values of the changes in stock indices which renders coefficients inconsistent. 
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Third, the analysis employs a Breusch-Godfrey test to look for serial autocorrelation. The test does indicate that we can accept the null and thus, can assume no serial autocorrelation is present in the data. Consequently, we assume that the standard errors are not underestimated. Since we deal with a time series we conclude that there is an acceptable degree of heteroskedasticity. The result of the Breusch-Pagan test might not be as reliable in the presence of lagged dependent variables. 
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;Fourth, the external validity of the results must be seen with utmost caution. We have only looked at four national stock indices which are all composed differently and measure stock performances in industrial nations of the OECD. In summary, we can conclude that the coefficients statistical significance is reliable to a certain degree since standard errors are assumed to be efficient. However, internal validity is harmed by the small sample size. Concerning external validity, results should only be taken as indicative and not as final conclusive evidence since they rely on OECD countries only.
 
 # Future Research
 <br>
-&nbsp;&nbsp;&nbsp;&nbsp;Future Research could further invest into interactions: Is the true effect of GDP growth on changes of national stock market indices dependent on a second covariate?
-
+&nbsp;&nbsp;&nbsp;&nbsp;Future Research could further invest into interactions: Is the true effect of GDP growth on changes of national stock market indices dependent on a second covariate? Also interesting should be approaches that aim for a higher external validity than we did: Studies could include national indices of other OECD countries or re-focus solely on BRICS or developing countries.Another pathway for future research could be to stay closer to the format of the original raw data: While we collapsed and aggregated data to quarterly format, analysis with monthly, weekly or even daily data should yield some interesting results. Especially, since we found that the effects of changes in GDP growth on the changes of national stock market indices are of rather immediate than long-term nature. 
+ 
 # Conclusion
 <br>
 
