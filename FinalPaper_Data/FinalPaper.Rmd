@@ -418,19 +418,8 @@ stargazer(M9, M10, M11, M12,
 
 \clearpage
 
-# Acknowledgment R-packages
-
-[@CiteR]
-[@R-magrittr]
-[@R-stargazer]
-[@R-ggplot2]
-[@R-DAAG]
-[@R-plyr]
-[@R-reshape]
-[@R-zoo]
-[@R-Rmisc]
-[@R-repmis]
-[@R-DataCombine]
+# Acknowledgments
+&nbsp;&nbsp;&nbsp;&nbsp;We would like to take the opportunity to acknowledge not only the inventors of R [@CiteR] but also the surrounding community that supplies fantastic add-on packages. Without their appreciated work, this paper could not have been written [@R-magrittr, @R-stargazer, @R-ggplot2, @R-DAAG, @R-plyr, @R-reshape, @R-zoo, @R-Rmisc, @R-repmis, @R-DataCombine, @R-countrycode, @R-WDI]. Finally, we also would like to acknowledge the providers of our raw-data: Yahoo Finance, the OECD database and the ECB website.
 
 \clearpage
 
