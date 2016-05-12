@@ -1,0 +1,444 @@
+---
+title: "National GDP Growth and Changes of Stock Market Indices"
+subtitle: "Evidence from France, Germany, Great Britain and Japan"
+author:
+- Daniel Limberg
+- Lukas Mueller
+date: "May 12"
+abstract:  | 
+  Using data from Germany, Japan, Great Britain and France we provide an analysis of the effect of national GDP Growth on changes of national stock market indices. Controling for various covariates we find that for Great Britain and France GDP growth has statistically significant effects on the FTSE100 and the CAC40. 
+date: "12. Mai 2016"
+output: html_document
+---
+
+```{r, echo=FALSE, message=FALSE, include=FALSE, cache=FALSE}
+# Descriptive & Inferential Statistics
+library(stargazer)
+library(Rmisc)
+library(ggplot2)
+library(magrittr)
+library(grid)
+library(DAAG)
+
+# Set Working Directory
+try(setwd("/Users/Lukas/Documents/Git/FinalPaper/"),silent=TRUE)
+try(setwd("C:/Users/Dani/Documents/GitHub2/FinalPaper/"),silent=TRUE)
+getwd()
+
+
+# Dynamical Link to first R script file
+source("FinalPaper_Code/FinalPaper_Variables.R")
+```
+
+\pagebreak
+
+# Introduction
+
+&nbsp;&nbsp;&nbsp;&nbsp;Nowadays, equity prices have become the nexus between capitalism and our daily life on the globe. Especially the financial crisis and the following European sovereign debt crisis darken the beauty of this nexus, that was once proclaimed to be a good - if not the best - example of a functioning market mechanism.\newline
+In this paper, we investigate an odd relation that is a part of the nexus: GDP growth and a subset of national equity prices; that is national stock indices. The intuitive assumption that one automatically has is fairly straight forward: The better the economy performs, the higher expectations of market participants, investments and trust in the future. In turn, we should - naturally - obtain an increase in the *level* of a national stock market indices given good economic performance within a country. In a way it is reasonable to argue, that national stock indices serve as a proxy of the economy. However, the more interesting question is beyond this intuitive assumption: \newline
+&nbsp;&nbsp;&nbsp;&nbsp;Focusing on four OECD countries (Germany, France, Great Britain and Japan) we investigate whether GDP growth has an effect of the *changes* of the indices. If so, are there different levels of statistical significance for the effect of GDP growth across the different countries? That is, we do not compare the size of the effects (i.e. coefficients) since we investigate on different dependent variables. We take the four major national stock market indices of the countries as our dependent variable: The CAC40 (France), DAX (Germany), FTSE100 (Great Britain) and the NIKKEI (Japan). We control for a row of other, lagged explanatory determinants - not only from within the national economy (e.g. inflation rate) but also external, more global factors (e.g. oil price). We elaborate on the specific covariates below. For our analysis we focus on the time period between the beginning of 1999 (where ECB interest rates became relevant) and the end of 2015. \newline
+
+&nbsp;&nbsp;&nbsp;&nbsp;The rest of this paper is structured as follows. In the next section 2 we provide a brief Literature Review and introduce basic findings of the field for our topic. Section 3 provides of Research Question and Hypothesis. We then introduce our Data and Variables of Interest in section 4. We continue with some basic Descriptive Statistics (section 5) before we provide our Analysis and Discussion in section 6. We end with Limitations and opportunities for Future Research (section 7) and a Conclusion (section 8). Note that we provide diagnostics and a variation of our final model in the Appendix.
+
+# Literature Review
+
+&nbsp;&nbsp;&nbsp;&nbsp;We would like to provide a two-step literature review. In the first part we summarize general findings of the field regarding national indices: What are determinants that ought to be influential on the level of national indices?
+In the second, more narrow step, we focus on the relationsship between GDP growth and national indices: Did previous studies find a relationship after all? Were causal assumptions confirmed?
+
+## National Indices
+
+&nbsp;&nbsp;&nbsp;&nbsp;Dimson et al. provide a solid and helpful introduction to the subject ^[The work of Dimson et al. was regularly updated. The 2009 edition is the most recent version available.] with a focus on world's stock markets and the question of returns [@dimson2009triumph]. The field provides a tremendous amount of research on the question what influences stock markets in general and national indices in specific. Work includes research on herding effects in advanced [@chiang2010empirical], Chinese [@tan2008herding] or Japanese stock markets [@chang2006idiosyncratic]. \newline
+&nbsp;&nbsp;&nbsp;&nbsp;Other scholars aim to predict the direction of indices via neural networks - as an attempt to go beyond traditional (non-)linear models. Examples of this stream of research include the work of Guresen et al. [@guresen2011using] or a study of the Istanbul stock exchange index [@kara2011predicting]. Other authors investigate the effect of the media [@tetlock2007giving] or even the weather on stock markets [@symeonidis2010does, @kang2010weather, @yoon2009weather, @goetzmann2005rain, @cao2005stock].\newline
+&nbsp;&nbsp;&nbsp;&nbsp;Contagion and spill-over effects are also of interest for the field. Boyer et al. provide empirical evidence that stock market crises are spread globally through asset holdings of international investors. The more open (i.e. accessible) the stock markets, the higher the co-movements, they find [@boyer2006crises]. Kenourgios et al. conclude very similar [@kenourgios2011financial]. Furthermore, the field moved on to insights from behavioral economics. Bollen et al. provide an interesting piece of work and find correlations between what they call the *twitter mood* and the Dow Jones Industrial Average over time [@bollen2011twitter]. The work of Zhang et al. [@zhang2011predicting] and Si et al. [@si2013exploiting] follow a similar approach and find almost identical results.
+
+## GDP Growth and National Indices
+
+&nbsp;&nbsp;&nbsp;&nbsp;The field provides various studies which focus on the relationship between GDP growth (or macroeconomic determinants of GDP growth) and stock markets in general. For example, Claessens et al. "study how local stock market development and internationalization listing, trading, and capital raising in international exchanges are related to economic fundamentals" [@claessens2006stock]. Duca states that there is a clear co-movement between stock market prices and GDP in developed economies. Assuming causal effects he finds that "the level of economic activity in a country can potentially depend on the stock market amongst other variables" [@duca2007relationship]. On the other hand, Ritter finds that cross-country correlation of real stock returns and per capita GDP growth over 1900-2002 is negative. This is mainly traced back to the fact that increases in capital and labor inputs (i.e. two main determinants of GDP growth) in new corporations (i.e. representing innovation) do not necessarily imply higher dividends [@ritter2005economic].\newline
+
+&nbsp;&nbsp;&nbsp;&nbsp;For 42 emerging markets Yartey examines the effect of institutional and macroeconomic determinants on stock market developments [@yartey2008determinants]. Similar studies focus on these determinants for a wide range of countries. These include OECD countries like Belgium [@van2006stock], France [@sraer2007performance], Germany [@antonios2010stock] or New Zealand from 1990 to 2003 [@diebold2008macroeconomic]. And developing markets such as Malaysia [@rahman2009macroeconomic] or BRICS-countries like India [@singh2010causal, @agrawalla2007causality] and South Africa [@hsing2011stock] in general. 
+
+# Research Question and Hypothesis
+
+&nbsp;&nbsp;&nbsp;&nbsp;*Do changes in GDP growth lead to changes in the country's national stock market index?*
+
+* H~0~: There are statistically significant effects of GDP growth on the growth rates of a country's stock market index.
+
+* H~1~: There are no statistically significant effects of GDP growth on the growth rates of a country's stock market index.
+
+
+# Data and Variables of Interest 
+
+&nbsp;&nbsp;&nbsp;&nbsp;In the following we introduce our variables of interest and briefly summarize how they fit our purpose. All variables were collected on (or aggregated to) a quarterly format.  
+
+| **Variables**       | Number | Origin of Data | Time Range               |
+|---------------------|--------|----------------|--------------------------|
+| Dependent Variables | 4      | Yahoo Finance  | Quarter 1 1999 - Q4 2015 |
+| Covariates          | 6      | ECB, OECD      | Quarter 2 1999 - Q4 2015 |
+
+
+## Dependent Variables
+
+&nbsp;&nbsp;&nbsp;&nbsp;We use data from Yahoo Finance to derive four dependent variables. We are interested in equity prices in the form of national stock market indices for four OECD countries: France, Germany, Great Britain and Japan. The indices measure the combined stock values of companies and/or equities in a country which are top performing according to given benchmarks. We measure the dependent variables as the change of the average closing value from the previous quarter. In other words, we are not interested in the *level* but rather in the *variation* or *changes* of the indices over time. 
+
+**Dependent Variables**   | Official Title                      | Scope
+ ------------------------- | -------------------------------- | -------------
+ CAC40 (France) | Cotation Assisté en Continu 40 | 40 highest Market Caps
+ DAX (Germany) | Deutscher Aktienindex | 30 major Companies
+ FTSE100 (Great Britain) | Fin. Times Stock Exchange 100 Index | 100 Companies
+ NIKKEI (Japan) | NIKKEI 225 | 225 Equities
+
+## Covariates
+
+&nbsp;&nbsp;&nbsp;&nbsp;In the following we control for various covariates. We use a lag of one quarter and another lag of two quarters for all covariates. If not indicated differently, the default for the covariates is a lag of one quarter. \newline
+&nbsp;&nbsp;&nbsp;&nbsp;For the control variables we differentiate between country-specific and general covariates that apply to all countries. Starting with country-specific covariates (i.e. variables that are unique to France, Germany, Great Britain and France), we use OECD data to derive the three following covariates. Among them is our key independent variable: GDP growth. We also use private consumption and the inflation rate (measured through the CPI) within the countries as additional control variables. 
+
+| **Country-specific Covariates** | Measured                  |
+|---------------------------------|---------------------------|
+| GDP growth                      | % change to previous quarter |
+| Consumer price index (CPI)      | % change to previous quarter | 
+| Private consumption             | % change of share of GDP to prev. quarter |
+
+&nbsp;&nbsp;&nbsp;&nbsp;From the ECB database we use the deposit facility (i.e. interest rate for banks^[We rakishly use the term "banks" for this paper. While "Financial Institutions" would be more appropriate to apply, we dare to continue with "banks" for reasons of simplicity.] making overnight deposits with the Eurosystem). Quite noticeable is the fact that, since June 2014, the rate is negative. That is, quite counter-intuitive, banks are penalized when making deposits.\newline
+&nbsp;&nbsp;&nbsp;&nbsp;Again using OECD data, we also take the quarterly GDP growth rate of the USA as a proxy for the general development of the world economy. The economy of the USA has a profound impact on other national business cycles, and national recessions in the US have sever repercussions across the globe. This was demonstrated again after 2007 when the US subprime mortgage crisis turned into a global recession. Moreover, the West Texas Intermediate (WTI) price changes are taken as an indicator of global economic health and a crucial determinant of economic growth.
+
+| **Covariates**        | Measured                                 |
+|-----------------------|------------------------------------------|
+| ECB deposit facility  | % change to previous quarter             |
+| GDP growth USA        | % change to previous quarter             |
+| WTI                   | % change to previous quarter             |
+
+&nbsp;&nbsp;&nbsp;&nbsp;At the early stage of research for this paper other covariates were taken into account: the ECB's interest rate on the main refinancing operations (MRO), the unemployment rate for the four countries of interest and the brent crude oil price. However, a first variance inflation factor (vif) test after prelimenary regressions suggested to ignore the mentioned variables.
+
+# Descriptive Statistics
+
+## Overview Dependent Variables
+
+&nbsp;&nbsp;&nbsp;&nbsp;Before going into our analysis, we now turn to a brief description of our available and cleaned data. \newline
+&nbsp;&nbsp;&nbsp;&nbsp;Figure 1 below presents a first overview of the four dependent variables: The % change of the average closing value of the indices to the previous quarter. The graphs range from the first quarter in 1999 to the last quarter in 2015. Given the financial crisis, the CAC40, DAX, FTSE100 and NIKKEI share a remarkable but unsurprising downturn in the end of 2008 and in early 2009. 
+
+```{r, echo=FALSE, message=FALSE, include=FALSE, cache=FALSE}
+### Germany
+p1 <- ggplot(data = merge10, aes(x = Date, y = DAX.Close.change)) + geom_line() + scale_x_continuous(breaks=seq(1999.1, 2015.4, 5)) + ggtitle("Germany | DAX") + theme(plot.title = element_text(size=10)) + labs(x = "Quarters", y = "% change of av. closing value") + theme(legend.position="none") + theme(axis.text=element_text(size=8),
+        axis.title=element_text(size=8))
+### Japan
+p2 <- ggplot(data = merge10, aes(x = Date, y = NIK.Close.change)) + geom_line() + scale_x_continuous(breaks=seq(1999.1, 2015.4, 5)) + ggtitle("Japan | NIKKEI") + theme(plot.title = element_text(size=10)) + labs(x = "Quarters", y = "% change of av. closing value") + theme(legend.position="none") + theme(axis.text=element_text(size=8),
+        axis.title=element_text(size=8))
+### France
+p3 <- ggplot(data = merge10, aes(x = Date, y = CAC.Close.change)) + geom_line() + scale_x_continuous(breaks=seq(1999.1, 2015.4, 5)) + ggtitle("France | CAC40") + theme(plot.title = element_text(size=10)) + labs(x = "Quarters", y = "% change of av. closing value") + theme(legend.position="none") + theme(axis.text=element_text(size=8),
+        axis.title=element_text(size=8))
+### Great Britain
+p4 <- ggplot(data = merge10, aes(x = Date, y = FTSE.Close.change)) + geom_line() + scale_x_continuous(breaks=seq(1999.1, 2015.4, 5)) + ggtitle("Great Britain | FTSE100") + theme(plot.title = element_text(size=10)) + labs(x = "Quarters", y = "% change of av. closing value") + theme(legend.position="none") + theme(axis.text=element_text(size=8),
+        axis.title=element_text(size=8))
+```
+
+```{r, echo=FALSE, warning=FALSE, fig.cap="Dependent variables: % change of average closing values of national stock indices over time"}
+multiplot(p3, p1, p4, p2, cols = 2)
+```
+
+\pagebreak
+
+## Overview Independent Variables
+
+&nbsp;&nbsp;&nbsp;&nbsp;Another interesting overview is given with Figure 2 which summarizes the developments of our key independent variables over the same time (i.e. Q1 1999 until Q4 2015). Our country-specific, key independent variables measure GDP growth (i.e. change to previous quarter) for the country in question. Remarkable again is the major, well visible downturn during and in the aftermath of financial crisis in all four graphs.
+
+```{r, echo=FALSE, message=FALSE, include=FALSE, cache=FALSE}
+farben <- c("firebrick1", "mediumspringgreen", "deepskyblue2", "chocolate4", "cyan2")
+### Germany
+p5 <- ggplot(data = merge10, aes(x = Date, y = DEU.GDP)) + geom_line() + scale_x_continuous(breaks=seq(1999.1, 2015.4, 5)) + ggtitle("Germany") + theme(plot.title = element_text(size=10)) + labs(x = "Quarters", y = "% change of GDP") + theme(axis.text=element_text(size=8),
+        axis.title=element_text(size=8)) + theme(legend.position="none")
+### Japan
+p6 <- ggplot(data = merge10, aes(x = Date, y = JPN.GDP)) + geom_line() + scale_x_continuous(breaks=seq(1999.1, 2015.4, 5)) + ggtitle("Japan") + theme(plot.title = element_text(size=10)) + labs(x = "Quarters", y = "% change of GDP") + theme(axis.text=element_text(size=8),
+        axis.title=element_text(size=8)) + theme(legend.position="none")
+### France
+p7 <- ggplot(data = merge10, aes(x = Date, y = FRA.GDP)) + geom_line() + scale_x_continuous(breaks=seq(1999.1, 2015.4, 5)) + ggtitle("France") + theme(plot.title = element_text(size=10)) + labs(x = "Quarters", y = "% change of GDP") + theme(axis.text=element_text(size=8),
+        axis.title=element_text(size=8)) + theme(legend.position="none")
+### Great Britain
+p8 <- ggplot(data = merge10, aes(x = Date, y = GBR.GDP)) + geom_line() + scale_x_continuous(breaks=seq(1999.1, 2015.4, 5)) + ggtitle("Great Britain") + theme(plot.title = element_text(size=10)) + labs(x = "Quarters", y = "% change of GDP") + theme(axis.text=element_text(size=8),
+        axis.title=element_text(size=8)) + theme(legend.position="none")
+### USA
+p9 <- ggplot(data = merge10, aes(x = Date, y = USA.GDP)) + geom_line() + scale_x_continuous(breaks=seq(1999.1, 2015.4, 5)) + ggtitle("USA") + theme(plot.title = element_text(size=10)) + labs(x = "Quarters", y = "% change of GDP") + theme(axis.text=element_text(size=8),
+        axis.title=element_text(size=8)) + theme(legend.position="none")
+```
+
+```{r, echo=FALSE, warning=FALSE, fig.cap="Key independent variables: GDP growth over time"}
+multiplot(p7, p5, p8, p6, cols = 2)
+```
+
+\pagebreak
+
+## Key Characteristics Variables of Interest
+
+&nbsp;&nbsp;&nbsp;&nbsp;The table below summarizes the main characteristics for the depent (National stock market indices) and key indepent (GDP Growth) variables for our analyzed time period of Q1 1999 to Q4 2015. At first glance, our N=69 in all cases seems fairly small. However, note that we aggregated our original, raw data into a quarterly format. In the original dataset we obtained around 4400 observations per regression (i.e. per index). In terms of the changes of the national indices, the DAX reached the highest (+27.6%) and the NIKKEI the lowest (-31.8%) values. Japan experienced the highest (2.7%) and Germany the lowest (-4.5%) values for GDP growth in the time period.
+
+```{r, echo=FALSE, results="asis"}
+# N, Mean St. Deviations, Min and Max for all Variables
+stargazer(merge10[, c("CAC.Close.change", "DAX.Close.change", "FTSE.Close.change", "NIK.Close.change", "L.FRA.GDP", "L.DEU.GDP", "L.GBR.GDP", "L.JPN.GDP")], 
+          type = "latex",
+          covariate.labels = c("CAC40", "DAX", "FTSE100", "NIKKEI", "France GDP growth", "Germany GDP growth", "Great Britain GDP growth", "Japan GDP growth"),
+          title = "Descriptive statistics",
+          header = FALSE,
+          digits=1)
+```
+
+\pagebreak
+
+## Frequency Distribution Dependent Variables
+
+&nbsp;&nbsp;&nbsp;&nbsp;In the next step, the histograms below summarize the frequency distributions of the dependent variables. Please note the different scales of the y-axes and the x-axis in case of Japan. It becomes visible that all four national indices with their % change of the average closing value cluster around 0, although the CAC40 and the DAX are slightly scewed to the right. For now, we assume the variables to be normally distributed. In following research to this assignment we should, however, consider log-transformation especially in the case of Japan.
+\newline
+
+```{r, echo=FALSE, fig.cap="Dependent variables: Frequency distributions"}
+par(mfrow=c(2,2))
+hist(merge10$CAC.Close.change,
+     main="France | CAC40", 
+     col="black", 
+     breaks = 15,
+     xlab = "% change of average closing values",
+     ylab = "Frequency")
+hist(merge10$DAX.Close.change,
+     main="Germany | DAX", 
+     col="black", 
+     breaks = 15,
+     xlab = "% change of average closing values",
+     ylab = "Frequency")
+hist(merge10$FTSE.Close.change,
+     main="Great Britain | FTSE100", 
+     col="black", 
+     breaks = 15,
+     xlab = "% change of average closing values",
+     ylab = "Frequency")
+hist(merge10$NIK.Close.change,
+     main="Japan | Nikkei", 
+     col="black", 
+     breaks = 15,
+     xlab = "% change of average closing values",
+     ylab = "Frequency")
+```
+
+\pagebreak
+
+### Joint Distributions
+
+&nbsp;&nbsp;&nbsp;&nbsp;Below, we obtain the joint distributions between our dependent and key independent variables for the four countries. Here, we use GDP growth lagged by one quarter, which we also use in the following analysis section below. The key dependent variables on the y-axes are the % changes of average closing values for the given indices.\newline
+Remarkable are the few outliers in negative GDP growth for Germany, France and Japan, which suggest a downward trend. However, here the confindence intervals already indicate that one needs to be careful with drawing conclusions from this section of the graphics. More interesting is the general upward trend for Germany, Japan and Great Britain that starts around and above a GDP growth of 0%. This supports the original idea we described earlier on: A well performing national economy should, in theory, lead to a rise in the national stock market index. Quite to the contrary, we see rather a stagnation instead of a rise around and above a GDP growth of 0% for Japan. While we need regression modeling to draw true conclusions from this correlation, it should also be mentioned again that the NIKKEI combines the highest number of equities of all dependent variables. It is probably fair to assume that the high number of equities balances the relationship. 
+
+```{r, echo=FALSE, message=FALSE, include=FALSE, cache=FALSE, warning=FALSE}
+#FRA
+p17 <- ggplot(merge10, aes(x = L.FRA.GDP, y = CAC.Close.change)) + 
+  geom_point() + 
+  geom_smooth() +
+  ggtitle("France") +
+  xlab("Lagged GDP Growth") +
+  ylab("CAC40 % change of av. closing value") +
+  theme(axis.text=element_text(size=8),
+        axis.title=element_text(size=8)) +
+  theme(plot.title = element_text(size=10)) 
+#GER
+p15 <- ggplot(merge10, aes(x = L.DEU.GDP, y = DAX.Close.change)) + 
+  geom_point() + 
+  geom_smooth() +
+  ggtitle("Germany") +
+  xlab("Lagged GDP Growth") +
+  ylab("DAX % change of av. closing value") +
+  theme(axis.text=element_text(size=8),
+        axis.title=element_text(size=8)) +
+  theme(plot.title = element_text(size=10)) 
+#GBR
+p18 <- ggplot(merge10, aes(x = L.GBR.GDP, y = FTSE.Close.change)) + 
+  geom_point() + 
+  geom_smooth() +
+  ggtitle("Great Britain") +
+  xlab("Lagged GDP Growth") +
+  ylab("FTSE100 % change of average closing value") +
+  theme(axis.text=element_text(size=8),
+        axis.title=element_text(size=8)) +
+  theme(plot.title = element_text(size=10)) 
+#JPN
+p16 <- ggplot(merge10, aes(x = L.JPN.GDP, y = NIK.Close.change)) + 
+  geom_point() + 
+  geom_smooth() +
+  ggtitle("Japan") +
+  xlab("Lagged GDP Growth") +
+  ylab("NIKKEI % change of av. closing value") +
+  theme(axis.text=element_text(size=8),
+        axis.title=element_text(size=8)) +
+  theme(plot.title = element_text(size=10)) 
+```
+
+```{r, echo=FALSE, message=FALSE, include=TRUE, cache=FALSE, warning=FALSE, fig.cap="Joint distributions of dependent and key independent variables"}
+multiplot(p15, p16, p17, p18, cols = 2)
+```
+
+\clearpage
+
+# Analysis and Discussion of Results
+
+&nbsp;&nbsp;&nbsp;&nbsp;For the analysis section we provide our comprehensive model below. However, before going into the most promising model that we found during our research, we would like to offer a very basic model as a starting point of the analysis. We only regress the change of the four national stock indices on the lagged quaterly GDP growth of the respective country.
+
+```{r, echo=FALSE, message=FALSE, include=FALSE, cache=FALSE}
+M1 <- lm(CAC.Close.change ~ L.FRA.GDP, data = merge10)
+
+M2 <- lm(DAX.Close.change ~ L.DEU.GDP, data = merge10)
+
+M3 <- lm(FTSE.Close.change ~ L.GBR.GDP, data = merge10)
+
+M4 <- lm(NIK.Close.change ~ L.JPN.GDP, data = merge10)
+```
+
+```{r, echo=FALSE, results="asis"}
+stargazer(M1, M2, M3, M4,
+          type="latex",
+          title = "Basic Model",
+          covariate.labels = c("France GDP growth", "Germany GDP growth", "Great Britain GDP growth", "Japan GDP growth"),
+          dep.var.labels=c("CAC40","DAX", "FTSE100", "NIKKEI"),
+          header = FALSE,
+          no.space = TRUE)
+```
+
+The basic model shows only for France a statistically significant relationship between change in quarterly GDP growth and change in the stock market index CAC 40. All other coefficients are statisitcally insignificant but show the same positive sign. This result forshadows the significance of the coefficients for lagged quaterly GDP growth in the extended model. The coefficient for France will not change its level of significance when controlling for inflation, private consumption, the Europen Central Bank's deposit facility rate, the change in World Texas Intermediate prices, quarterly US GDP growth, and year factors. The coefficients for Germany, Great Britain, and Japan, however, become weakly statistically significant (at the 10 percent level). This might suggest a certian degree of robustness. It should be kept in mind that the stock indices measure the stock performances of either a few selected companies or equities. Thus, the four coefficients should be compared with caution. Looking at a variation of the final model^[Appenidx: Table 9.] we see the statistical significance of the coefficients for lagged quaterly GDP growth unchanged. Only the coefficient for France increases its statistial significance to the 1 percent level.
+
+```{r, echo=FALSE, message=FALSE, include=FALSE, cache=FALSE}
+summary(M13 <- lm(CAC.Close.change ~ L.FRA.GDP + L2.FRA.GDP + L.FRA.infl + L2.FRA.infl + L.FRA.prvconsm + L2.FRA.prvconsm + L.ECB.dep.change + L2.ECB.dep.change + L.WTI.dollar.change + L2.WTI.dollar.change + L.USA.GDP + L2.USA.GDP + year, data = merge10))
+
+summary(M14 <- lm(DAX.Close.change ~ L.DEU.GDP + L2.DEU.GDP + L.DEU.infl + L2.DEU.infl + L.DEU.prvconsm + L2.DEU.prvconsm + L.ECB.dep.change + L2.ECB.dep.change + L.WTI.dollar.change + L2.WTI.dollar.change + L.USA.GDP + L2.USA.GDP + year, data = merge10))
+
+summary(M15 <- lm(FTSE.Close.change ~ L.GBR.GDP + L2.GBR.GDP + L.GBR.infl + L2.GBR.infl + L.GBR.prvconsm + L2.GBR.prvconsm + L.ECB.dep.change + L2.ECB.dep.change + L.WTI.dollar.change + L2.WTI.dollar.change + L.USA.GDP + L2.USA.GDP + year, data = merge10))
+
+summary(M16 <- lm(NIK.Close.change ~ L.JPN.GDP + L2.JPN.GDP + L.JPN.infl + L2.JPN.infl + L.JPN.prvconsm + L2.JPN.prvconsm + L.ECB.dep.change + L2.ECB.dep.change + L.WTI.dollar.change + L2.WTI.dollar.change + L.USA.GDP + L2.USA.GDP + year, data = merge10))
+```
+
+```{r, echo=FALSE, results="asis"}
+stargazer(M13, M14, M15, M16,
+          type="latex",
+          font.size = "tiny",
+          title = "Final model",
+          covariate.labels = c("France GDP growth", "France GDP growth (two q. lag)", "France inflation", "France inflation (two q. lag)", "France pr. consumption", "France pr. consumption (two q. lag)", "Germany GDP growth", "Germany GDP growth (two q. lag)", "Germany inflation", "Germany inflation (two q. lag)", "Germany pr. consumption", "Germany pr. consumption (two q. lag)", "Great Britain GDP growth", "Great Britain GDP growth (two quarter lag)", "Great Britain inflation", "Great Britain inflation (two q. lag)", "Great Britain pr. consumption", "Great Britain pr. consumption (two q. lag)", "Japan GDP growth", "Japan GDP growth (two q. lag)", "Japan inflation", "Japan inflation (two q. lag)", "Japan pr. consumption", "Japan pr. consumption (two q. lag)", "ECB deposit facility", "ECB deposit facility (two q. lag)", "WTI", "WTI (two q. lag)", "USA GDP growth", "USA GDP growth (two q. lag)", "1999", "2000", "2001", "2002", "2003", "2004", "2005", "2007", "2008", "2009", "2010", "2011", "2012", "2013", "2014", "2015"),   
+          dep.var.labels=c("CAC40","DAX", "FTSE100", "NIKKEI"),
+          header = FALSE,
+          no.space = TRUE)
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp;Looking at Table 7 we see that the effect of GDP growth of the previous quarter on national stock indices growth of the current quarter is only statistically significant in the case of France. All variables are lagged by one quarter and two quartes.^[The VIF test sugests an acceptable degree of collinearity between the variables for this model. See Appendix.] It is weakly significant (at the 10 percent level) for Germany and Japan. Significance levels for Great Britain do not allow to tell whether the effect is different from zero. The effect of GDP growth becomes insignificant for all countries when lagged by two time periods (i.e. quarters). The effect is always positive which suggests that a healthy growing economy correlates with a growing stock market. That the effect of GDP growth becomes insignificant (standard errors increase relative to the coefficient) when lagged by two periods suggests that the channel of influence between the real and the financial economy is rather immediate.\newline
+
+&nbsp;&nbsp;&nbsp;&nbsp;The effect of inflation measured as the change of the consumer price index lagged by one period is negative and statistical significant for France and Japan. Results suggests that increasing inflation decreases performances of the respective stock market indices in these countries. This negative effect is weakly significant for Germany. Significant levels decrease for all countries when looking at the effect lagged by two periods. The effect however stays weakly significant for France which also showed the highest significance for the effect lagged by one quarter. These results suggest that the inflation does have a negative effect on stock market indices. It is not clear how the channel of influence works since intuition would suggest that at a higher inflation rate consumers rather invest than safe. \newline
+
+&nbsp;&nbsp;&nbsp;&nbsp;Coefficients for both variables and both lags of quarterly GDP and change of inflation (i.e. consumer price index) for Great Britain are statistically insignificant. First, this result can be interpreted as the real sector not being a significant determinant of the financial performance of the stock of the companies included in the FTSE100. One explanation would be that in the Anglo-Saxon economic model, the financial system is a capital market based system as opposed to a system which relies more on financial intermediaries such as on the continent. Thus, it is much more flexible and volatile independently of the real sector. Second, the statistically insignificant, negative coefficient of changes in consumer prices does indicate that people do not decrease savings and increase investments. This can be explained by the different set up of the financial sector in Great Britain as compared to the other countries. Such a financial sector might follow different underlying dynamics. Since these financial markets rely far less on banks people have a different propensity to save. Put differently, investments into stocks take place anyway regardless of the inflation rate. It should be noted, however, that in Germany and Japan this effect is only significant at the 10 percent level and thus, general conclusions are difficult to draw from these results.\newline
+
+&nbsp;&nbsp;&nbsp;&nbsp;Looking at the quarterly change of the European Central Bank's deposit facility the variable yields negative, statistically significant results for France, Germany, and Great Britain when lagged by two periods. For Japan the coefficient is only statistically significant at the 10 percent level. In simple terms, the negative effect suggests that when the deposit facility interest increases, banks' revenues increase when storing their money overnight at the ECB. This implies that a high interest rate incentives the banks to keep money off markets. The negative effect suggests that increasing volumes of money held at banks does hurt the stock market: Less liquidity dampens investments. It seems straightforward that this effect is only weakly significant for Japan since Japanese banks are not directly affected by changes of the deposit facility. Moreover, the statistical insignificance of the effect, when lagged by one period, can be explained by the outside lag of the political decision making process. Such decisions need at least six months to have an actual effect on the economy. The effects of a change in the central bank's monetary policy on an individual may not become visible before a certain time has passed.\newline
+
+&nbsp;&nbsp;&nbsp;&nbsp;All other coefficients for all other variables are not statistically significantly different from zero. The effect for changes in private consumption is negative for France Germany and Japan. For France, however, the effect becomes positive when lagged by two periods. The effect is positive for Great Britain. This could suggests again a difference in the propensity to safe and consume respectively. The variables to measure the world economy as quarterly US GDP growth and the change in WTI oil prices also have no statistically significant effect which is surprising since the US economy is traditionally viewed as a strong factor determining global economic health. Compared to the baseline year of 2006, generally all year factors display a negative sign and are predominantly statistically insignificant. 2006 was the peak performing year financially and economically. One year later, in 2007, the financial crisis started in the USA with the breakdown of Lehman Brothers in September and continued to spill over to Europe in 2008/2009 culminating in the European sovereign debt crisis. Thus, comparing the other years with 2006, all years would perform worse and thus, have a negative impact on the stock indices performances relative to 2006. Except for the years 2001 and 2002, factors are generally not statistically significant.\newline
+
+&nbsp;&nbsp;&nbsp;&nbsp;The final model does explain a relatively larege portion of the variance in the dependent variable. When looking at the adjusted R^2 which is lowest for Germany with R^2 = .36 and highest for France with R^2 = .53 it should be noted, however, that a direct comparison is difficult to make. The four dependent variables are all differently composed, and thus, variables measuring the same concept may have a different effect across the four regression models.\newline
+
+&nbsp;&nbsp;&nbsp;&nbsp;Finally, the results suggest to not reject the Null that there are statistically significant effects of GDP growth on the growth rates of a country's stock index for France. For all other national stock indices we cannot accept the Null and have to conclude that there are no statistically significant effects of GDP growth on the growth rates of a country's stock market index.
+
+# Limitations and Future Research
+
+&nbsp;&nbsp;&nbsp;&nbsp;The analysis is subject to certain limitations.^[Diagnostics results can be found in the Appendix] All tests are done for each regression separately. First, it should be noted that one has to take results with caution: if GDP of an economy and stock market performance of its best firms and equities are intertwined then the regression model estimates suffer from reverse causality. The analysis tries to mitigate this endogeneity problem by introducing two lags for GDP growth and each other variable. However, if the reverse causality is too strong and both variables would effectively measure the same concept, then the lag is the only variance in the regression. Second, a Breusch-Pagan test suggests that the analysis suffers from heteroskedasticity. We cannot accept the null and thus, have to assume that the variance of the residuals is dependent on the values of the changes in stock indices which renders coefficients inconsistent. Third, the analysis employs a Breusch-Godfrey test to look for serial autocorrelation. The test does indicate that we can accept the null and thus, can assume no serial autocorrelation is present in the data. Consequently, we assume that the standard errors are not underestimated. Since we deal with a time series we conclude that there is an acceptable degree of heteroskedasticity. The result of the Breusch-Pagan test might not be as reliable in the presence of lagged dependent variables. Fourth, the external validity of the results must be seen with utmost caution. We have only looked at four national stock indices which are all composed differently and measure stock performances in industrial nations of the OECD. In summary, we can conclude that the coefficients statistical significance is reliable to a certain degree since standard errors are assumed to be efficient. However, internal validity is harmed by the small sample size. Concerning external validity, results should only be taken as indicative and not as final conclusive evidence since they rely on OECD countries only.
+
+&nbsp;&nbsp;&nbsp;&nbsp;Future Research could further invest into interactions: Is the true effect of GDP growth on changes of national stock market indices dependent on a second covariate?
+
+# Conclusion
+
+# Acknowledgments
+&nbsp;&nbsp;&nbsp;&nbsp;We would like to take the opportunity to acknowledge not only the inventors of R [@CiteR] but also the surrounding community that supplies fantastic add-on packages. Without their appreciated work, this paper could not have been written [@R-magrittr, @R-stargazer, @R-ggplot2, @R-DAAG, @R-plyr, @R-reshape, @R-zoo, @R-Rmisc, @R-repmis, @R-DataCombine, @R-countrycode, @R-WDI]. Finally, we also would like to acknowledge the providers of our raw-data: Yahoo Finance, the OECD database and the ECB website.
+
+# Appendix
+
+&nbsp;&nbsp;&nbsp;&nbsp;All following diagnostics refer back to our comprehensive, final model.
+
+## Heteroscedasticity
+
+```{r, echo=FALSE}
+par(mfrow=c(2,2))
+plot(M13, which = 1)
+  title("France")
+plot(M14, which = 1)
+  title("Germany")
+plot(M15, which = 1)
+  title("Great Britain")
+plot(M16, which = 1)
+  title("Japan")
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp;Looking at the four graphs we see that the basic models suffer to a certain degree from heteroskedasticity. This stems from outliers which bias the results in the graphs. We conclude that the overall degree of hetereoskedasticity is acceptable since the general relationship seems to be random.
+
+## Diagnose of non-normality of Errors
+
+```{r, echo=FALSE}
+par(mfrow=c(2,2))
+plot(M1, which = 2)
+  title("France")
+plot(M2, which = 2)
+  title("Germany")
+plot(M3, which = 2)
+  title("Great Britain")
+plot(M4, which = 2)
+  title("Japan")
+```
+
+&nbsp;&nbsp;&nbsp;&nbsp;The graphs give and idea of the distribution of the error term in the regression. Ideally, the error terms should be normally distributed, and not show a right or left skew. In these graphs, however, we show a cummulative distribution function. That means that we want small residuals in the lower quantiles of the distriution and large residuals in the upper quantiles of the distribution of the error term. Put differently, we would expect a crosswise line from the lower left bottom to the upper right corner. All four lines sugest such a crosswise pattern indicating the degree of normality of error terms.
+
+## Variance Inflation Factor Test
+
+```{r, echo=FALSE, message = TRUE}
+France <- DAAG::vif(M13)
+Germany <- DAAG::vif(M14)
+Britain <- DAAG::vif(M15)
+Japan <- DAAG::vif(M16)
+
+a <- cbind(France, Germany, Britain, Japan)
+
+rownames(a) <- c('GDP growth', 'GDP growth (two q. lag)', 'inflation', 'inflation (two q. lag)', 'pr. consumption', 'pr. consumption (two q. lag)', 'ECB deposit facility', 'ECB deposit facility (two q. lag)', 'WTI', 'WTI (two q. lag)', 'USA GDP growth', 'USA GDP growth (two q. lag)', '1999', '2000', '2001', '2002', '2003', '2004', '2005', '2007', '2008', '2009', '2010', '2011', '2012', '2013', '2014', '2015')
+
+knitr::kable(a, digits = 2, caption = 'Variance Inflation Factor')
+
+rm(a, France, Germany, Britain, Japan)
+```
+
+## Breusch-Pagan Test
+
+```{r, echo=FALSE, message = TRUE, results="asis"}
+lmtest::bptest(M13, studentize = FALSE)
+lmtest::bptest(M14, studentize = FALSE)
+lmtest::bptest(M15, studentize = FALSE)
+lmtest::bptest(M16, studentize = FALSE)
+```
+
+## Breusch-Godfrey Test
+
+```{r, echo=FALSE, message = TRUE, results="asis"}
+lmtest::bgtest(M13, order = 2, order.by = NULL, type = c("Chisq", "F"), data = list(), fill = 0)
+lmtest::bgtest(M14, order = 2, order.by = NULL, type = c("Chisq", "F"), data = list(), fill = 0)
+lmtest::bgtest(M15, order = 2, order.by = NULL, type = c("Chisq", "F"), data = list(), fill = 0)
+lmtest::bgtest(M16, order = 2, order.by = NULL, type = c("Chisq", "F"), data = list(), fill = 0)
+```
+
+```{r, echo=FALSE, message=FALSE, include=FALSE, cache=FALSE}
+M9 <- lm(CAC.Close.change ~ L.FRA.GDP + L2.FRA.GDP + L.FRA.infl + L.FRA.prvconsm + L.ECB.dep.change + L.WTI.dollar.change + L.USA.GDP + L2.USA.GDP + year, data = merge10)
+
+M10 <- lm(DAX.Close.change ~ L.DEU.GDP + L2.DEU.GDP + L.DEU.infl + L.DEU.prvconsm + L.ECB.dep.change + L.WTI.dollar.change + L.USA.GDP + L2.USA.GDP + year, data = merge10)
+
+M11 <- lm(FTSE.Close.change ~ L.GBR.GDP + L2.GBR.GDP + L.GBR.infl + L.GBR.prvconsm + L.ECB.dep.change + L.WTI.dollar.change + L.USA.GDP + L2.USA.GDP + year, data = merge10)
+
+M12 <- lm(NIK.Close.change ~ L.JPN.GDP + L2.JPN.GDP + L.JPN.infl + L.JPN.prvconsm + L.ECB.dep.change + L.WTI.dollar.change + L.USA.GDP + L2.USA.GDP + year, data = merge10)
+```
+
+\pagebreak
+
+## Model Variation
+
+```{r, echo=FALSE, results="asis"}
+stargazer(M9, M10, M11, M12,
+          type="latex",
+          font.size = "tiny",
+          title = "Variation of Final Model",
+          covariate.labels = c("France GDP growth", "France GDP growth (two q. lag)", "France inflation", "France pr. consumption", "Germany GDP growth", "Germany GDP growth (two q. lag)", "Germany inflation", "Germany pr. consumption", "Great Britain GDP growth", "GDP Great Britain GDP growth (two q. lag)", "Great Britain inflation", "Great Britain pr. consumption", "Japan GDP growth", "Japan GDP growth (two q. lag)", "Japan inflation", "Japan pr. consumption", "ECB deposit facility", "WTI", "USA GDP growth", "USA GDP growth (two q. lag)", "1999", "2000", "2001", "2002", "2003", "2004", "2005", "2007", "2008", "2009", "2010", "2011", "2012", "2013", "2014", "2015"),
+          dep.var.labels=c("CAC","DAX", "FTSE", "Nikkei"),
+          header = FALSE,
+          no.space = TRUE)
+```
+
+\clearpage
+
+# Bibliography 
