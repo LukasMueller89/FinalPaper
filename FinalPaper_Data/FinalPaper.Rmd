@@ -82,12 +82,12 @@ In the second, more narrow step, we focus on the relationsship between GDP growt
 | **Variables**       | Number | Origin of Data | Time Range               |
 |---------------------|--------|----------------|--------------------------|
 | Dependent Variables | 4      | Yahoo Finance  | Quarter 1 1999 - Q4 2015 |
-| Covariates          | 6      | ECB, OECD      | Quarter 2 1999 - Q4 2015 |
+| Covariates          | 6      | ECB, OECD      | Quarter 1 1999 - Q4 2015 |
 
 
 ## Dependent Variables
 
-&nbsp;&nbsp;&nbsp;&nbsp;We use data from Yahoo Finance to derive four dependent variables. We are interested in equity prices in the form of national stock market indices for four OECD countries: France, Germany, Great Britain and Japan. The indices measure the combined stock values of companies and/or equities in a country which are top performing according to given benchmarks. We measure the dependent variables as the change of the average closing value from the previous quarter. In other words, we are not interested in the *level* but rather in the *variation* or *changes* of the indices over time. 
+&nbsp;&nbsp;&nbsp;&nbsp;We use data from Yahoo Finance to derive four dependent variables. We are interested in equity prices in the form of national stock market indices for four OECD countries: France, Germany, Great Britain and Japan. The indices measure the combined stock values of companies and/or equities in a country which are top performing according to given benchmarks. We measure the dependent variables as the change of the average closing value from the previous quarter. In other words, we are not interested in the *level* but rather in the *changes* of the indices over time.
 
 **Dependent Variables**   | Official Title                      | Scope
  ------------------------- | -------------------------------- | -------------
@@ -108,7 +108,7 @@ In the second, more narrow step, we focus on the relationsship between GDP growt
 | Private consumption             | % change of share of GDP to prev. quarter |
 
 &nbsp;&nbsp;&nbsp;&nbsp;From the ECB database we use the deposit facility (i.e. interest rate for banks^[We rakishly use the term "banks" for this paper. While "Financial Institutions" would be more appropriate to apply, we dare to continue with "banks" for reasons of simplicity.] making overnight deposits with the Eurosystem). Quite noticeable is the fact that, since June 2014, the rate is negative. That is, quite counter-intuitive, banks are penalized when making deposits.\newline
-&nbsp;&nbsp;&nbsp;&nbsp;Again using OECD data, we also take the quarterly GDP growth rate of the USA as a proxy for the general development of the world economy. The economy of the USA has a profound impact on other national business cycles, and national recessions in the US have sever repercussions across the globe. This was demonstrated again after 2007 when the US subprime mortgage crisis turned into a global recession. Moreover, the West Texas Intermediate (WTI) price changes are taken as an indicator of global economic health and a crucial determinant of economic growth.
+&nbsp;&nbsp;&nbsp;&nbsp;Again using OECD data, we also take the quarterly GDP growth rate of the USA as a proxy for the general development of the world economy. The economy of the USA has a profound impact on other national business cycles, and national recessions in the US have severe repercussions across the globe. This was demonstrated again after 2007 when the US subprime mortgage crisis turned into a global recession. Moreover, the West Texas Intermediate (WTI) price changes are taken as an indicator of global economic health and a crucial determinant of economic growth.
 
 | **Covariates**        | Measured                                 |
 |-----------------------|------------------------------------------|
@@ -123,7 +123,7 @@ In the second, more narrow step, we focus on the relationsship between GDP growt
 ## Overview Dependent Variables
 
 &nbsp;&nbsp;&nbsp;&nbsp;Before going into our analysis, we now turn to a brief description of our available and cleaned data. \newline
-&nbsp;&nbsp;&nbsp;&nbsp;Figure 1 below presents a first overview of the four dependent variables: The % change of the average closing value of the indices to the previous quarter. The graphs range from the first quarter in 1999 to the last quarter in 2015. Given the financial crisis, the CAC40, DAX, FTSE100 and NIKKEI share a remarkable but unsurprising downturn in the end of 2008 and in early 2009. 
+&nbsp;&nbsp;&nbsp;&nbsp;Figure 1 below presents a first overview of the four dependent variables: The % change of the average closing value of the indices to the previous quarter. The graphs range from the first quarter in 1999 to the last quarter in 2015. Given the financial crisis, the CAC40, DAX, FTSE100, and NIKKEI share a remarkable but unsurprising downturn in the end of 2008 and in early 2009. 
 
 ```{r, echo=FALSE, message=FALSE, include=FALSE, cache=FALSE}
 ### Germany
@@ -191,7 +191,7 @@ stargazer(merge10[, c("CAC.Close.change", "DAX.Close.change", "FTSE.Close.change
 
 \pagebreak
 
-## Frequency Distribution Dependent Variables
+## Frequency Distribution of Dependent Variables
 
 &nbsp;&nbsp;&nbsp;&nbsp;In the next step, the histograms below summarize the frequency distributions of the dependent variables. Please note the different scales of the y-axes and the x-axis in case of Japan. It becomes visible that all four national indices with their % change of the average closing value cluster around 0, although the CAC40 and the DAX are slightly scewed to the right. For now, we assume the variables to be normally distributed. In following research to this assignment we should, however, consider log-transformation especially in the case of Japan.
 \newline
@@ -229,7 +229,7 @@ hist(merge10$NIK.Close.change,
 ### Joint Distributions
 
 &nbsp;&nbsp;&nbsp;&nbsp;Below, we obtain the joint distributions between our dependent and key independent variables for the four countries. Here, we use GDP growth lagged by one quarter, which we also use in the following analysis section below. The key dependent variables on the y-axes are the % changes of average closing values for the given indices.\newline
-Remarkable are the few outliers in negative GDP growth for Germany, France and Japan, which suggest a downward trend. However, here the confindence intervals already indicate that one needs to be careful with drawing conclusions from this section of the graphics. More interesting is the general upward trend for Germany, Japan and Great Britain that starts around and above a GDP growth of 0%. This supports the original idea we described earlier on: A well performing national economy should, in theory, lead to a rise in the national stock market index. Quite to the contrary, we see rather a stagnation instead of a rise around and above a GDP growth of 0% for Japan. While we need regression modeling to draw true conclusions from this correlation, it should also be mentioned again that the NIKKEI combines the highest number of equities of all dependent variables. It is probably fair to assume that the high number of equities balances the relationship. 
+Remarkable are the few outliers in negative GDP growth for Germany, France, and Japan, which suggest a downward trend. However, the confindence intervals already indicate that one needs to be careful with drawing conclusions from this section of the graphics. More interesting is the general upward trend for Germany, Japan, and Great Britain that starts around and above a GDP growth of 0%. This supports the original idea we described earlier on: A well performing national economy should, in theory, lead to a rise in the national stock market index. Quite to the contrary, we see rather a stagnation instead of a rise around and above a GDP growth of 0% for Japan. While we need regression modeling to draw true conclusions from this correlation, it should also be mentioned again that the NIKKEI combines the highest number of equities of all dependent variables. It is probably fair to assume that the high number of equities balances the relationship. 
 
 ```{r, echo=FALSE, message=FALSE, include=FALSE, cache=FALSE, warning=FALSE}
 #FRA
