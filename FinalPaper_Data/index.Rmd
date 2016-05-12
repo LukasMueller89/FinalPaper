@@ -81,7 +81,7 @@ In the second, more narrow step, we focus on the relationsship between GDP growt
 | **Variables**       | Number | Origin of Data | Time Range               |
 |---------------------|--------|----------------|--------------------------|
 | Dependent Variables | 4      | Yahoo Finance  | Quarter 1 1999 - Q4 2015 |
-| Covariates          | 6      | ECB, OECD      | Quarter 2 1999 - Q4 2015 |
+| Covariates          | 6      | ECB, OECD      | Quarter 1 1999 - Q4 2015 |
 
 
 ## Dependent Variables
@@ -218,5 +218,85 @@ hist(merge10$NIK.Close.change,
      breaks = 15,
      xlab = "% change of average closing values",
      ylab = "Frequency")
+```
+
+### Joint Distributions
+
+&nbsp;&nbsp;&nbsp;&nbsp;Below, we obtain the joint distributions between our dependent and key independent variables for the four countries. Here, we use GDP growth lagged by one quarter, which we also use in the following analysis section below. The key dependent variables on the y-axes are the % changes of average closing values for the given indices.\newline
+Remarkable are the few outliers in negative GDP growth for Germany, France, and Japan, which suggest a downward trend. However, the confindence intervals already indicate that one needs to be careful with drawing conclusions from this section of the graphics. More interesting is the general upward trend for Germany, Japan, and Great Britain that starts around and above a GDP growth of 0%. This supports the original idea we described earlier on: A well performing national economy should, in theory, lead to a rise in the national stock market index. Quite to the contrary, we see rather a stagnation instead of a rise around and above a GDP growth of 0% for Japan. While we need regression modeling to draw true conclusions from this correlation, it should also be mentioned again that the NIKKEI combines the highest number of equities of all dependent variables. It is probably fair to assume that the high number of equities balances the relationship. 
+
+```{r, echo=FALSE, message=FALSE, include=FALSE, cache=FALSE, warning=FALSE}
+#FRA
+p17 <- ggplot(merge10, aes(x = L.FRA.GDP, y = CAC.Close.change)) + 
+  geom_point() + 
+  geom_smooth() +
+  ggtitle("France") +
+  xlab("Lagged GDP Growth") +
+  ylab("CAC40 % change of av. closing value") +
+  theme(axis.text=element_text(size=8),
+        axis.title=element_text(size=8)) +
+  theme(plot.title = element_text(size=10)) 
+#GER
+p15 <- ggplot(merge10, aes(x = L.DEU.GDP, y = DAX.Close.change)) + 
+  geom_point() + 
+  geom_smooth() +
+  ggtitle("Germany") +
+  xlab("Lagged GDP Growth") +
+  ylab("DAX % change of av. closing value") +
+  theme(axis.text=element_text(size=8),
+        axis.title=element_text(size=8)) +
+  theme(plot.title = element_text(size=10)) 
+#GBR
+p18 <- ggplot(merge10, aes(x = L.GBR.GDP, y = FTSE.Close.change)) + 
+  geom_point() + 
+  geom_smooth() +
+  ggtitle("Great Britain") +
+  xlab("Lagged GDP Growth") +
+  ylab("FTSE100 % change of average closing value") +
+  theme(axis.text=element_text(size=8),
+        axis.title=element_text(size=8)) +
+  theme(plot.title = element_text(size=10)) 
+#JPN
+p16 <- ggplot(merge10, aes(x = L.JPN.GDP, y = NIK.Close.change)) + 
+  geom_point() + 
+  geom_smooth() +
+  ggtitle("Japan") +
+  xlab("Lagged GDP Growth") +
+  ylab("NIKKEI % change of av. closing value") +
+  theme(axis.text=element_text(size=8),
+        axis.title=element_text(size=8)) +
+  theme(plot.title = element_text(size=10)) 
+```
+
+```{r, echo=FALSE, message=FALSE, include=TRUE, cache=FALSE, warning=FALSE, fig.cap="Joint distributions of dependent and key independent variables"}
+ggplotly(p17)
+ggplotly(p15)
+ggplotly(p18)
+ggplotly(p16)
+```
+
+
+# Analysis and Discussion of Results
+
+&nbsp;&nbsp;&nbsp;&nbsp;For the analysis section we provide our comprehensive model below. However, before going into the most promising model that we found during our research, we would like to offer a very basic model as a starting point of the analysis. We only regress the change of the four national stock indices on the lagged quaterly GDP growth of the respective country.
+
+```{r, echo=FALSE, message=FALSE, include=FALSE, cache=FALSE}
+M1 <- lm(CAC.Close.change ~ L.FRA.GDP, data = merge10)
+
+M2 <- lm(DAX.Close.change ~ L.DEU.GDP, data = merge10)
+
+M3 <- lm(FTSE.Close.change ~ L.GBR.GDP, data = merge10)
+
+M4 <- lm(NIK.Close.change ~ L.JPN.GDP, data = merge10)
+```
+
+```{r, echo=FALSE, results="asis"}
+stargazer(M1, M2, M3, M4,
+          type="html",
+          title = "Basic Model",
+          covariate.labels = c("France GDP growth", "Germany GDP growth", "Great Britain GDP growth", "Japan GDP growth"),
+          dep.var.labels=c("CAC40","DAX", "FTSE100", "NIKKEI"),
+          header = FALSE,
+          no.space = TRUE)
 ```
 
