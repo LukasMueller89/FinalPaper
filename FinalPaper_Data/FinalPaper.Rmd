@@ -51,7 +51,7 @@ In this paper, we investigate an odd relation that is a part of the nexus: GDP g
 
 # Literature Review
 
-&nbsp;&nbsp;&nbsp;&nbsp;We would like to provide a two-step literature review. In the first part we summarize general findings of the field regarding national indices: What are determinants that ought to be influential on the level of national indices?
+&nbsp;&nbsp;&nbsp;&nbsp;We would like to provide a two-step review of existing literature. In the first part we summarize general findings of the field regarding national indices: What are determinants that ought to be influential on the level of national indices?
 In the second, more narrow step, we focus on the relationsship between GDP growth and national indices: Did previous studies find a relationship after all? Were causal assumptions confirmed?
 
 ## National Indices
