@@ -32,13 +32,13 @@ library(DAAG)
 library(plotly)
 
 # Set Working Directory
-try(setwd("/Users/Lukas/Documents/Git/FinalPaper/"),silent=TRUE)
+try(setwd("/Users/Lukas/Documents/Git/FinalPaper/FinalPaper_Data"),silent=TRUE)
 try(setwd("C:/Users/Dani/Documents/GitHub2/FinalPaper/"),silent=TRUE)
 getwd()
 
 
 # Dynamical Link to first R script file
-source("FinalPaper_Code/FinalPaper_Variables.R")
+source("/Users/Lukas/Documents/Git/FinalPaper/FinalPaper_Code/FinalPaper_Variables.R")
 ```
 <br>
 <br>
