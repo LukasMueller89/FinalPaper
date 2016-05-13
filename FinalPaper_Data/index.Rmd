@@ -285,10 +285,19 @@ p16 <- ggplot(merge10, aes(x = L.JPN.GDP, y = NIK.Close.change)) +
   theme(plot.title = element_text(size=11)) 
 ```
 
-```{r, echo=FALSE, message=FALSE, include=TRUE, cache=FALSE, warning=FALSE, fig.cap="Joint distributions of dependent and key independent variables"}
+```{r, echo=FALSE, message=FALSE, include=TRUE, cache=FALSE, warning=FALSE}
 ggplotly(p17)
+```
+
+```{r, echo=FALSE, message=FALSE, include=TRUE, cache=FALSE, warning=FALSE}
 ggplotly(p15)
+```
+
+```{r, echo=FALSE, message=FALSE, include=TRUE, cache=FALSE, warning=FALSE}
 ggplotly(p18)
+```
+
+```{r, echo=FALSE, message=FALSE, include=TRUE, cache=FALSE, warning=FALSE}
 ggplotly(p16)
 ```
 
