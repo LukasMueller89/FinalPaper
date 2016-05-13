@@ -3,7 +3,7 @@
 
 In this repository we provide our final paper and website for the Collaborative Social Science Class at the [Hertie School of Governance](https://www.hertie-school.org/home/) in the Spring of 2016 thaught by [Christopher Gandrud](https://github.com/christophergandrud).
 
-* Project Webpage:[Here.](http://lukasmueller89.github.io/FinalPaper/)
+* Project Webpage:[Here.](http://lukasmueller89.github.io/FinalPaper/FinalPaper_Data)
 * And please report any issue or give feedback: [Here.](https://github.com/LukasMueller89/FinalPaper/issues)
 
 ### Instructions and Background
